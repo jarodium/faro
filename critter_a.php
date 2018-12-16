@@ -20,8 +20,8 @@
         
         
         shuffle($points);
-        $critter->move($points[0]);
+        $critter->move(implode(",",$points[0]));
         
-        sleep(100);
+        sleep(10);
     }
 ?>

@@ -9,6 +9,16 @@ var clientsCoords  = [];
 var critters = [];
 server.listen(3000);
 
+function search(nameKey, prop, myArray){
+    k = -1;
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i][prop]=== nameKey) {
+            k = i;
+            break;
+        }
+    }
+    return k;
+}
 /**
  * APP Server LOGIC
  * 
@@ -49,20 +59,25 @@ io.on('connection', function (client) {
 responder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
   // do some 'work'
-  setTimeout(function() {
-    if (!critters[request.id]) {
-      critters[request.id] = {
-        name : request.name,
-        pos : request.pos
-      };
-    }
-    else {
-      critters[request.id].pos = request.pos;   
-    }
-    client.broadcast.emit('crittersUpdated',JSON.stringify(critters));
-    // send reply back to client.
-    responder.send("node 200");
-  }, 1000);
+  var r = request.toString();
+  r = r.slice(r.indexOf("{"),r.lastIndexOf("}")+1);
+  r = JSON.parse(r);
+  
+  let obj = critters.find(o => o.id === r.id);
+  
+  if (obj) {
+    obj.pos = r.pos;
+    
+  }
+  else {
+    critters.push(r);
+  }
+  
+  
+  io.sockets.emit('crittersUpdated',critters);
+  // send reply back to client.
+  responder.send("node 200");
+  
 });
 
 responder.bind('tcp://*:6666', function(err) {
