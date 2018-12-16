@@ -12,13 +12,13 @@ while (true) {
     $request = $mdwrk->recv($reply);
     
     $reply = new Zmsg();
-    $reply->body_set("500q");
+    $reply->body_set("200");
     //$mdwrk->send($reply);
     //$session->send("move", $request);
     
-    printf ("Sending X request %d…\n", "550q");
-    $requester->send("Hello");
+    printf ("Sending request to node %s…\n", $request);
+    $requester->send($request);
 
     $replyW = $requester->recv();
-    printf ("Received reply %d: [%s]\n", $request_nbr, $replyW);
+    printf ("Received reply [%s]\n", $replyW);
 }

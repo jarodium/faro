@@ -6,6 +6,7 @@ var responder = zmq.socket('rep');
 
 var clients = []; //store the clients
 var clientsCoords  = [];
+var critters = [];
 server.listen(3000);
 
 /**
@@ -47,12 +48,20 @@ io.on('connection', function (client) {
 */
 responder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
-
   // do some 'work'
   setTimeout(function() {
-
+    if (!critters[request.id]) {
+      critters[request.id] = {
+        name : request.name,
+        pos : request.pos
+      };
+    }
+    else {
+      critters[request.id].pos = request.pos;   
+    }
+    client.broadcast.emit('crittersUpdated',JSON.stringify(critters));
     // send reply back to client.
-    responder.send("World");
+    responder.send("node 200");
   }, 1000);
 });
 

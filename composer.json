@@ -1,6 +1,4 @@
 {
     "require": {
-        "bobthecow/faker": "dev-master",
-        "ephp/socketio": "dev-master"
     }
 }

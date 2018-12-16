@@ -1,4 +1,4 @@
 #!/bin/bash
 pkill -f .php
-nohup php server.php & php worker.php
-#nohup node server.js
+pkill -f "node engine.js";
+nohup php server.php & php worker.php & node engine.js

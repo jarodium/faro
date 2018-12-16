@@ -10,11 +10,20 @@
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
+   <style>
+       html, body { width:100%; height:100%; }
+   </style>
 <script>
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://192.168.56.101:3000');
     //bind listeners
-    socket.on('updatemap', function (data) {
-        //console.log(data);
+    socket.on('crittersUpdated', function (data) {
+        console.log("crittersUpdated");
+        console.log(data);
+        //socket.emit('my other event', { my: 'data' });
+    });
+    socket.on('coordsUpdated', function (data) {
+        console.log("coordsUpdated");
+        console.log(data);
         //socket.emit('my other event', { my: 'data' });
     });
     function initmap(myLat) {
@@ -24,20 +33,23 @@
 	    // create the tile layer with correct attribution
 	    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});		
+	    var osm = new L.TileLayer(osmUrl, {minZoom: 12, maxZoom: 15, attribution: osmAttrib});		
 
 	    // start the map in South-East England
-	    map.setView(new L.LatLng(myLat),9);
+	    map.setView(myLat,12);
 	    map.addLayer(osm);
 	    
 	    
 	    socket.emit('updateCoord', { coord: myLat });
         
     }
-    initmap(51.3, 0.7);
 </script>
 </head>
 <body>
+    <div id="map" style="width:100%; height:100%;"></div>
     
+    <script>
+        initmap([37.0345556,-7.9504845]);
+    </script>
 </body>
 </html>
