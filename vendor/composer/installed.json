@@ -1,0 +1,85 @@
+[
+    {
+        "name": "bobthecow/faker",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/bobthecow/Faker.git",
+            "reference": "332c9ad613f3511cc30b33a49566f10bb04162a9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/bobthecow/Faker/zipball/332c9ad613f3511cc30b33a49566f10bb04162a9",
+            "reference": "332c9ad613f3511cc30b33a49566f10bb04162a9",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "conflict": {
+            "fzaninotto/faker": "*"
+        },
+        "time": "2016-01-14T21:06:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Faker": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "The easiest way to generate fake data in PHP"
+    },
+    {
+        "name": "ephp/socketio",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ephp/socketio.git",
+            "reference": "2429bb8f9e1daa99157244b8f188798c23ac4644"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ephp/socketio/zipball/2429bb8f9e1daa99157244b8f188798c23ac4644",
+            "reference": "2429bb8f9e1daa99157244b8f188798c23ac4644",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-04-17T13:35:35+00:00",
+        "type": "lib",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Ephp": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Ephrim Pepe <ephraim.pepe@gmail.com>"
+            }
+        ],
+        "description": "Send events to socket.io though PHP",
+        "keywords": [
+            "Socket.io",
+            "nodejs",
+            "php",
+            "websocket"
+        ]
+    }
+]
