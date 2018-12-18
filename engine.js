@@ -61,6 +61,8 @@ io.on('connection', function (client) {
  * ZMQ LOGIC *
  * 
 */
+
+//responder.on('message', function(topic,request) {
 responder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
   // do some 'work'
