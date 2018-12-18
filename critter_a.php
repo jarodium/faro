@@ -15,7 +15,6 @@
     
     $critter = new Creature(["id" => "DRGN01","name" => "Dragon"]);
     
-    
     while (true) {
         
         
