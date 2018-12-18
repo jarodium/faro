@@ -1,4 +1,5 @@
-var app = require('express')();
+const express = require('express');
+const app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var zmq = require('zeromq');
@@ -7,6 +8,7 @@ var responder = zmq.socket('rep');
 var clients = []; //store the clients
 var clientsCoords  = [];
 var critters = [];
+
 server.listen(3000);
 
 function search(nameKey, prop, myArray){
@@ -23,6 +25,9 @@ function search(nameKey, prop, myArray){
  * APP Server LOGIC
  * 
 */
+app.use("/", express.static(__dirname + '/server'));
+
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/server/index.html');
 });
