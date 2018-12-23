@@ -62,26 +62,26 @@ io.on('connection', function (client) {
  * 
 */
 
-//responder.on('message', function(topic,request) {
 responder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
   // do some 'work'
   var r = request.toString();
   r = r.slice(r.indexOf("{"),r.lastIndexOf("}")+1);
   r = JSON.parse(r);
-  
-  let obj = critters.find(o => o.id === r.id);
-  
-  if (obj) {
-    obj.pos = r.pos;
+  if (r.cmd === "critter_move") {
+    let obj = critters.find(o => o.id === r.id);
     
-  }
-  else {
-    critters.push(r);
+    if (obj) {
+      obj.pos = r.pos;
+      
+    }
+    else {
+      critters.push(r);
+    }
+    io.sockets.emit('crittersUpdated',critters);
   }
   
   
-  io.sockets.emit('crittersUpdated',critters);
   // send reply back to client.
   responder.send("node 200");
   

@@ -1,0 +1,99 @@
+I: connecting to broker at tcp://localhost:5555...I: send request to 'spawn-critter' service: 
+--------------------------------------
+[000]  
+[006] MDPC01 
+[013] spawn-critter 
+[233] {"id":"DRGN01","name":"Dragon","speed":50,"pos":{"spawn_points":[[-7.9120446,37.0163574],[-7.9504845,37.0345556],[-7.9424287,37.009778],[-7.9185678,37.0092297],[-7.9504845,37.0345556],[-7.9185555,37.0344528]],"radius":10},"route":[]} 
+W: permanent error, abandoning request
+array(5) {
+  ["id"]=>
+  string(6) "DRGN01"
+  ["name"]=>
+  string(6) "Dragon"
+  ["speed"]=>
+  int(50)
+  ["pos"]=>
+  array(2) {
+    ["spawn_points"]=>
+    array(6) {
+      [0]=>
+      array(2) {
+        [0]=>
+        float(-7.9120446)
+        [1]=>
+        float(37.0163574)
+      }
+      [1]=>
+      array(2) {
+        [0]=>
+        float(-7.9504845)
+        [1]=>
+        float(37.0345556)
+      }
+      [2]=>
+      array(2) {
+        [0]=>
+        float(-7.9424287)
+        [1]=>
+        float(37.009778)
+      }
+      [3]=>
+      array(2) {
+        [0]=>
+        float(-7.9185678)
+        [1]=>
+        float(37.0092297)
+      }
+      [4]=>
+      array(2) {
+        [0]=>
+        float(-7.9504845)
+        [1]=>
+        float(37.0345556)
+      }
+      [5]=>
+      array(2) {
+        [0]=>
+        float(-7.9185555)
+        [1]=>
+        float(37.0344528)
+      }
+    }
+    ["radius"]=>
+    int(10)
+  }
+  ["route"]=>
+  array(0) {
+  }
+}
+I: send request to 'spawn-critter' service: 
+--------------------------------------
+[000]  
+[006] MDPC01 
+[013] spawn-critter 
+[153] {"maneuver":{"bearing_after":129,"bearing_before":0,"location":[37.011485,37.011549],"type":"depart"},"weight":1171.6,"duration":938.5,"distance":3891.8} 
+W: permanent error, abandoning request
+array(4) {
+  ["maneuver"]=>
+  array(4) {
+    ["bearing_after"]=>
+    int(129)
+    ["bearing_before"]=>
+    int(0)
+    ["location"]=>
+    array(2) {
+      [0]=>
+      float(37.011485)
+      [1]=>
+      float(37.011549)
+    }
+    ["type"]=>
+    string(6) "depart"
+  }
+  ["weight"]=>
+  float(1171.6)
+  ["duration"]=>
+  float(938.5)
+  ["distance"]=>
+  float(3891.8)
+}

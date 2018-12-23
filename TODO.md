@@ -7,8 +7,6 @@
 
 ## PHP
 
-- class_creature
-    - implementar as alterações ao construtor
 - critter_a
     - testar o comando move para confirmar a presença do "topic"
     - colocar as definições necessárias para a criatura
