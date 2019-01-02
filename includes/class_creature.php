@@ -83,6 +83,7 @@
                 $origin = $this->__reformatPoints(array_shift($this->spawn_points));
                 $destination = $this->__reformatPoints(array_shift($this->spawn_points));
                 
+                
                 $cache_file = "temp/".md5(implode(",",$origin).implode(",",$destination)).".json";
                 
                 if (file_exists($cache_file)) {
@@ -92,7 +93,8 @@
                     $rota = [];
                     $rota[] = [
                         "ori" => $origin[0],
-                        "des" => $origin[1]
+                        "des" => $origin[1],
+                        "bea" => 0
                     ];
                     
                     $origin = array_reverse($origin);
@@ -106,13 +108,14 @@
                         for($i=0; $i<count($steps); $i++) {
                             $rota[] = [
                                 "ori" => $steps[$i]["maneuver"]["location"][1],//para o front é invertido
-                                "des" => $steps[$i]["maneuver"]["location"][0]
+                                "des" => $steps[$i]["maneuver"]["location"][0],
+                                "bea" => $steps[$i]["maneuver"]["bearing_after"]
                             ];
                         }
                         unset($steps);
                     }
                     unset($res);
-                    file_put_contents($cache_file,json_encode($rta,JSON_UNESCAPED_UNICODE));
+                    file_put_contents($cache_file,json_encode($rota,JSON_UNESCAPED_UNICODE));
                 }
                 $this->stats["route"] = $rota;
                 unset($rota);
