@@ -12,36 +12,51 @@
         private $mapbox;
         private $session;
         private $stats = [];
+        private $spawn_points = [];
+        private $spawn_points_copy = [];
+        private $iri = 0; //internal route index;
         
         public function __construct($stats) {
-            $this->mapbox = $mapbox = new Mapbox(MAPBOXK);	
-            $this->session = new MDCli("tcp://localhost:5555", true);
-            
-            $this->stats = $stats;
-            unset($this->stats["spawn_points"]);
-            
-            shuffle($stats["spawn_points"]);
-            
-            
-            $this->stats["pos"]["spawn_points"] = $stats["spawn_points"];
-            $this->stats["pos"]["radius"] = 10; //10 km wide radius for mapbox directions request
-            $this->stats["route"] = [];
-            
-    
-            //issues command for node worker to spawn the creature with full features
-            $this->__issueCommand("spawn-critter",$this->stats);
+            if (count($stats["spawn_points"]) % 2 == 0) {
+                $this->mapbox = $mapbox = new Mapbox(MAPBOXK);	
+                //$this->session = new MDCli("tcp://localhost:5555", true);
+                $context = new ZMQContext();
+                $this->session = new ZMQSocket($context, ZMQ::SOCKET_REQ);
+                $this->session->connect("tcp://localhost:6666");
+                
+                $this->spawn_points = $stats["spawn_points"];
+                $this->spawn_points_copy = $stats["spawn_points"];
+                unset($stats["spawn_points"]);
+                
+                $this->stats = $stats;
+                
+                shuffle($this->spawn_points);
+                
+                
+                
+                $this->stats["pos"]["radius"] = 10; //10 km wide radius for mapbox directions request
+                $this->stats["route"] = [];
+                
+        
+                //issues command for node worker to spawn the creature with full features
+                $this->__issueCommand("spawn-critter",$this->stats);
+            }
+            else {
+                die("Error! Critters must have even number of spawn points");
+            }
         }
         
         private function __issueCommand($nome,$payload) {
-            $request = new Zmsg();
-            $request->body_set(json_encode($payload));
-            $this->session->send("spawn-critter", $request);
+            //$request = new Zmsg();
+            //$request->body_set(json_encode($payload));
+            $this->session->send(json_encode(["cmd" => $nome,"body" =>$payload]));
+            
             $reply = $this->session->recv();
-            var_dump($payload);
+            printf ("Received reply %s\n", $reply);
         }
         
         private function __reformatPoints($pos) {
-            $pos[0] = number_format($pos[1],4,".","");
+            $pos[0] = number_format($pos[0],4,".","");
             $pos[1] = number_format($pos[1],4,".","");
             
             return $pos;
@@ -64,49 +79,58 @@
         }
         
         public function move() {
-            if (count($this->stats["route"]) > 0) {
-                //movimentar a creatura para o próximo ponto
-                $next_pos = array_shift($this->stats["route"]);
-                $cmd = ["id" => $this->stats["id"], "nextpos" => $next_pos];
-                $this->__issueCommand("move-critter",$cmd);
+            if (count($this->stats["route"]) == 0) {
+                $origin = $this->__reformatPoints(array_shift($this->spawn_points));
+                $destination = $this->__reformatPoints(array_shift($this->spawn_points));
                 
-            }
-            else {
-                //não
-                    //invocar a api da mapbox
-                        //gravar um ficheiro de cache que memorize a origem e o destino e que contenha os steps devolvidos necessários
-                if (count($this->stats["pos"]["spawn_points"]) > 1) {
-                    $origin = $this->__reformatPoints(array_shift($this->stats["pos"]["spawn_points"]));
-                    $destination = $this->__reformatPoints(array_shift($this->stats["pos"]["spawn_points"]));
+                $cache_file = "temp/".md5(implode(",",$origin).implode(",",$destination)).".json";
+                
+                if (file_exists($cache_file)) {
+                    $rota = json_decode(file_get_contents($cache_file),true);
+                }
+                else {
+                    $rota = [];
+                    $rota[] = [
+                        "ori" => $origin[0],
+                        "des" => $origin[1]
+                    ];
                     
-                    $cache_file = "temp/".md5(implode(",",$origin).implode(",",$destination)).".json";
+                    $origin = array_reverse($origin);
+                    $destination = array_reverse($destination);
                     
-                    if (file_exists($cache_file)) {
-                        $steps = json_decode(file_get_contents($cache_file),true);
-                    }
-                    else {
-                        $res = $this->mapbox->directions(implode(",",$origin),implode(",",$destination),"cycling",["steps" => "true"]);    
-                        $res = json_decode($res["body"],true);
-                        if (isset($res["routes"])) {
-                            $steps = $res["routes"][0]["legs"][0]["steps"];
-                            //@ Todo - remove from legs all the unnecessary stuff
-                            for($i=0; $i<count($steps); $i++) {
-                                unset($steps[$i]["maneuver"]["instruction"],$steps[$i]["name"],$steps[$i]["mode"],
-                                $steps[$i]["intersections"], $steps[$i]["driving_side"], $steps[$i]["geometry"]);
-                            }
+                    $res = $this->mapbox->directions(implode(",",$origin),implode(",",$destination),"driving",["steps" => "true"]);    
+                    $res = json_decode($res["body"],true);
+                    if (isset($res["routes"])) {
+                        $steps = $res["routes"][0]["legs"][0]["steps"];
+                        //@ Todo - remove from legs all the unnecessary stuff
+                        for($i=0; $i<count($steps); $i++) {
+                            $rota[] = [
+                                "ori" => $steps[$i]["maneuver"]["location"][1],//para o front é invertido
+                                "des" => $steps[$i]["maneuver"]["location"][0]
+                            ];
                         }
-                        else {
-                            $steps = [];
-                        }
-                        file_put_contents($cache_file,json_encode($steps,JSON_UNESCAPED_UNICODE));
-                    }
-                    if (count($steps) > 0) {
-                        $this->stats["route"] = $steps;
                         unset($steps);
                     }
-                    $this->move();
+                    unset($res);
+                    file_put_contents($cache_file,json_encode($rta,JSON_UNESCAPED_UNICODE));
                 }
+                $this->stats["route"] = $rota;
+                unset($rota);
+                $this->move();
             }
+            else {
+                //movimentar a creatura para o próximo ponto
+                $cmd = ["id" => $this->stats["id"], "nextpos" => $this->stats["route"][$this->iri]];
+                $this->iri++;
+                $this->__issueCommand("move-critter",$cmd);
+                
+                //se chegou ao fim da rota
+                    //se ainda exisitirem spawn points
+                        //fazer uma rota desde o fim da rota para o spawn point seguinte
+                    //se não
+                        //copiar os spawnpoints da cópia
+            }
+            
             
         }
     }

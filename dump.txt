@@ -1,99 +1,1307 @@
-I: connecting to broker at tcp://localhost:5555...I: send request to 'spawn-critter' service: 
---------------------------------------
-[000]  
-[006] MDPC01 
-[013] spawn-critter 
-[233] {"id":"DRGN01","name":"Dragon","speed":50,"pos":{"spawn_points":[[-7.9120446,37.0163574],[-7.9504845,37.0345556],[-7.9424287,37.009778],[-7.9185678,37.0092297],[-7.9504845,37.0345556],[-7.9185555,37.0344528]],"radius":10},"route":[]} 
-W: permanent error, abandoning request
+Received reply {"cmd":"spawn-critter","body":{"id":"DRGN01","name":"Dragon","speed":50,"pos":{"radius":10},"route":[]}}
+Origem em 37.0213,-7.9415
 array(5) {
-  ["id"]=>
-  string(6) "DRGN01"
-  ["name"]=>
-  string(6) "Dragon"
-  ["speed"]=>
-  int(50)
-  ["pos"]=>
-  array(2) {
-    ["spawn_points"]=>
-    array(6) {
-      [0]=>
-      array(2) {
-        [0]=>
-        float(-7.9120446)
-        [1]=>
-        float(37.0163574)
-      }
-      [1]=>
-      array(2) {
-        [0]=>
-        float(-7.9504845)
-        [1]=>
-        float(37.0345556)
-      }
-      [2]=>
-      array(2) {
-        [0]=>
-        float(-7.9424287)
-        [1]=>
-        float(37.009778)
-      }
-      [3]=>
-      array(2) {
-        [0]=>
-        float(-7.9185678)
-        [1]=>
-        float(37.0092297)
-      }
-      [4]=>
-      array(2) {
-        [0]=>
-        float(-7.9504845)
-        [1]=>
-        float(37.0345556)
-      }
-      [5]=>
-      array(2) {
-        [0]=>
-        float(-7.9185555)
-        [1]=>
-        float(37.0344528)
-      }
-    }
-    ["radius"]=>
-    int(10)
-  }
-  ["route"]=>
-  array(0) {
-  }
-}
-I: send request to 'spawn-critter' service: 
---------------------------------------
-[000]  
-[006] MDPC01 
-[013] spawn-critter 
-[153] {"maneuver":{"bearing_after":129,"bearing_before":0,"location":[37.011485,37.011549],"type":"depart"},"weight":1171.6,"duration":938.5,"distance":3891.8} 
-W: permanent error, abandoning request
-array(4) {
-  ["maneuver"]=>
-  array(4) {
-    ["bearing_after"]=>
-    int(129)
-    ["bearing_before"]=>
-    int(0)
-    ["location"]=>
-    array(2) {
-      [0]=>
-      float(37.011485)
-      [1]=>
-      float(37.011549)
-    }
-    ["type"]=>
-    string(6) "depart"
-  }
+  ["summary"]=>
+  string(41) "Rua Aboim Ascensão, Rua António Sérgio"
   ["weight"]=>
-  float(1171.6)
+  float(344.3)
   ["duration"]=>
-  float(938.5)
+  float(304.8)
+  ["steps"]=>
+  array(8) {
+    [0]=>
+    array(9) {
+      ["intersections"]=>
+      array(2) {
+        [0]=>
+        array(4) {
+          ["out"]=>
+          int(0)
+          ["entry"]=>
+          array(1) {
+            [0]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(1) {
+            [0]=>
+            int(52)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941489)
+            [1]=>
+            float(37.021289)
+          }
+        }
+        [1]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(15)
+            [1]=>
+            int(150)
+            [2]=>
+            int(225)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941271)
+            [1]=>
+            float(37.021425)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(15) "av}`Fhano@[k@KA"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(5) {
+        ["bearing_after"]=>
+        int(52)
+        ["bearing_before"]=>
+        int(0)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.941489)
+          [1]=>
+          float(37.021289)
+        }
+        ["type"]=>
+        string(6) "depart"
+        ["instruction"]=>
+        string(14) "Head northeast"
+      }
+      ["weight"]=>
+      float(11.5)
+      ["duration"]=>
+      float(7.6)
+      ["name"]=>
+      string(0) ""
+      ["distance"]=>
+      float(31.7)
+    }
+    [1]=>
+    array(9) {
+      ["intersections"]=>
+      array(3) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(2)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(45)
+            [1]=>
+            int(195)
+            [2]=>
+            int(345)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941259)
+            [1]=>
+            float(37.021488)
+          }
+        }
+        [1]=>
+        array(5) {
+          ["out"]=>
+          int(2)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(45)
+            [1]=>
+            int(150)
+            [2]=>
+            int(330)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941382)
+            [1]=>
+            float(37.021715)
+          }
+        }
+        [2]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(45)
+            [1]=>
+            int(210)
+            [2]=>
+            int(315)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941775)
+            [1]=>
+            float(37.022283)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(29) "iw}`Fz_no@c@PIDGFsAjAKDGIe@{@"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(338)
+        ["bearing_before"]=>
+        int(8)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.941259)
+          [1]=>
+          float(37.021488)
+        }
+        ["modifier"]=>
+        string(4) "left"
+        ["type"]=>
+        string(4) "turn"
+        ["instruction"]=>
+        string(9) "Turn left"
+      }
+      ["weight"]=>
+      float(58.5)
+      ["duration"]=>
+      float(47.1)
+      ["name"]=>
+      string(0) ""
+      ["distance"]=>
+      float(138.6)
+    }
+    [2]=>
+    array(9) {
+      ["intersections"]=>
+      array(1) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(135)
+            [1]=>
+            int(225)
+            [2]=>
+            int(315)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.941478)
+            [1]=>
+            float(37.022471)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(17) "m}}`Ffano@n@u@Ye@"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(137)
+        ["bearing_before"]=>
+        int(50)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.941478)
+          [1]=>
+          float(37.022471)
+        }
+        ["modifier"]=>
+        string(5) "right"
+        ["type"]=>
+        string(11) "end of road"
+        ["instruction"]=>
+        string(10) "Turn right"
+      }
+      ["weight"]=>
+      float(31.5)
+      ["duration"]=>
+      float(20.8)
+      ["name"]=>
+      string(0) ""
+      ["distance"]=>
+      float(58.5)
+    }
+    [3]=>
+    array(9) {
+      ["intersections"]=>
+      array(1) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(135)
+            [1]=>
+            int(225)
+            [2]=>
+            int(315)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.94102)
+            [1]=>
+            float(37.022361)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(14) "w|}`Fj~mo@|FwH"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(135)
+        ["bearing_before"]=>
+        int(47)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.94102)
+          [1]=>
+          float(37.022361)
+        }
+        ["modifier"]=>
+        string(5) "right"
+        ["type"]=>
+        string(4) "turn"
+        ["instruction"]=>
+        string(10) "Turn right"
+      }
+      ["weight"]=>
+      int(20)
+      ["duration"]=>
+      float(19.8)
+      ["name"]=>
+      string(0) ""
+      ["distance"]=>
+      int(198)
+    }
+    [4]=>
+    array(9) {
+      ["intersections"]=>
+      array(18) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+            [3]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(120)
+            [1]=>
+            int(135)
+            [2]=>
+            int(315)
+            [3]=>
+            int(330)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.939462)
+            [1]=>
+            float(37.021087)
+          }
+        }
+        [1]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(30)
+            [1]=>
+            int(195)
+            [2]=>
+            int(225)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.939219)
+            [1]=>
+            float(37.0211)
+          }
+        }
+        [2]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(0)
+            [1]=>
+            int(30)
+            [2]=>
+            int(210)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.939199)
+            [1]=>
+            float(37.021133)
+          }
+        }
+        [3]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(3)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(true)
+            [3]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(60)
+            [1]=>
+            int(90)
+            [2]=>
+            int(180)
+            [3]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.938515)
+            [1]=>
+            float(37.021262)
+          }
+        }
+        [4]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(90)
+            [1]=>
+            int(135)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.937644)
+            [1]=>
+            float(37.021302)
+          }
+        }
+        [5]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(90)
+            [1]=>
+            int(210)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.937349)
+            [1]=>
+            float(37.021317)
+          }
+        }
+        [6]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(1)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(90)
+            [1]=>
+            int(270)
+            [2]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.937046)
+            [1]=>
+            float(37.021325)
+          }
+        }
+        [7]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(45)
+            [1]=>
+            int(90)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.936236)
+            [1]=>
+            float(37.021345)
+          }
+        }
+        [8]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(90)
+            [1]=>
+            int(150)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.936072)
+            [1]=>
+            float(37.021325)
+          }
+        }
+        [9]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(75)
+            [1]=>
+            int(90)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.935643)
+            [1]=>
+            float(37.021332)
+          }
+        }
+        [10]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(105)
+            [1]=>
+            int(150)
+            [2]=>
+            int(270)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.934342)
+            [1]=>
+            float(37.021351)
+          }
+        }
+        [11]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(3)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(true)
+            [3]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(0)
+            [1]=>
+            int(105)
+            [2]=>
+            int(180)
+            [3]=>
+            int(285)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.934247)
+            [1]=>
+            float(37.02134)
+          }
+        }
+        [12]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(3)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(true)
+            [3]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(115)
+            [1]=>
+            int(116)
+            [2]=>
+            int(201)
+            [3]=>
+            int(280)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.934188)
+            [1]=>
+            float(37.021332)
+          }
+        }
+        [13]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(115)
+            [1]=>
+            int(116)
+            [2]=>
+            int(296)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.933752)
+            [1]=>
+            float(37.021161)
+          }
+        }
+        [14]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+            [3]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(120)
+            [1]=>
+            int(165)
+            [2]=>
+            int(300)
+            [3]=>
+            int(330)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.933254)
+            [1]=>
+            float(37.020963)
+          }
+        }
+        [15]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(3)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+            [3]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(0)
+            [1]=>
+            int(120)
+            [2]=>
+            int(195)
+            [3]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.933225)
+            [1]=>
+            float(37.020952)
+          }
+        }
+        [16]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(120)
+            [1]=>
+            int(165)
+            [2]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.932901)
+            [1]=>
+            float(37.020826)
+          }
+        }
+        [17]=>
+        array(5) {
+          ["out"]=>
+          int(0)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(120)
+            [1]=>
+            int(195)
+            [2]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.932114)
+            [1]=>
+            float(37.020522)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(104) "yt}`Frtmo@DI@G@ICGCECEECKIIICK?K?{A?q@CaAC{@Aa@AWA{@CaDBa@?uA?aAC_A?k@Ae@@c@?K@Q@KLc@Rs@f@cB@CVaA|@}C^uA"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(7) {
+        ["exit"]=>
+        int(2)
+        ["bearing_after"]=>
+        int(126)
+        ["bearing_before"]=>
+        int(135)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.939462)
+          [1]=>
+          float(37.021087)
+        }
+        ["modifier"]=>
+        string(8) "straight"
+        ["type"]=>
+        string(10) "roundabout"
+        ["instruction"]=>
+        string(71) "Enter the traffic circle and take the 2nd exit onto Rua Aboim Ascensão"
+      }
+      ["weight"]=>
+      float(158.5)
+      ["duration"]=>
+      int(146)
+      ["name"]=>
+      string(19) "Rua Aboim Ascensão"
+      ["distance"]=>
+      float(728.8)
+    }
+    [5]=>
+    array(9) {
+      ["intersections"]=>
+      array(3) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(2)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(true)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(120)
+            [1]=>
+            int(210)
+            [2]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.931681)
+            [1]=>
+            float(37.020355)
+          }
+        }
+        [1]=>
+        array(5) {
+          ["out"]=>
+          int(2)
+          ["in"]=>
+          int(0)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+            [3]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(30)
+            [1]=>
+            int(120)
+            [2]=>
+            int(210)
+            [3]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.931877)
+            [1]=>
+            float(37.019942)
+          }
+        }
+        [2]=>
+        array(5) {
+          ["out"]=>
+          int(1)
+          ["in"]=>
+          int(0)
+          ["entry"]=>
+          array(3) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(true)
+            [2]=>
+            bool(false)
+          }
+          ["bearings"]=>
+          array(3) {
+            [0]=>
+            int(30)
+            [1]=>
+            int(210)
+            [2]=>
+            int(300)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.93217)
+            [1]=>
+            float(37.01944)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(22) "gp}`F~clo@HAhAh@bBx@XN"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(202)
+        ["bearing_before"]=>
+        int(115)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.931681)
+          [1]=>
+          float(37.020355)
+        }
+        ["modifier"]=>
+        string(5) "right"
+        ["type"]=>
+        string(4) "turn"
+        ["instruction"]=>
+        string(36) "Turn right onto Rua António Sérgio"
+      }
+      ["weight"]=>
+      float(53.1)
+      ["duration"]=>
+      float(52.3)
+      ["name"]=>
+      string(20) "Rua António Sérgio"
+      ["distance"]=>
+      int(127)
+    }
+    [6]=>
+    array(9) {
+      ["intersections"]=>
+      array(1) {
+        [0]=>
+        array(5) {
+          ["out"]=>
+          int(3)
+          ["in"]=>
+          int(0)
+          ["entry"]=>
+          array(4) {
+            [0]=>
+            bool(false)
+            [1]=>
+            bool(false)
+            [2]=>
+            bool(true)
+            [3]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(4) {
+            [0]=>
+            int(30)
+            [1]=>
+            int(75)
+            [2]=>
+            int(165)
+            [3]=>
+            int(255)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.932245)
+            [1]=>
+            float(37.019314)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(15) "ui}`Fpglo@?B\bB"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(248)
+        ["bearing_before"]=>
+        int(205)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.932245)
+          [1]=>
+          float(37.019314)
+        }
+        ["modifier"]=>
+        string(5) "right"
+        ["type"]=>
+        string(4) "turn"
+        ["instruction"]=>
+        string(36) "Turn right onto Rua Cruz das Mestras"
+      }
+      ["weight"]=>
+      float(11.2)
+      ["duration"]=>
+      float(11.2)
+      ["name"]=>
+      string(20) "Rua Cruz das Mestras"
+      ["distance"]=>
+      int(50)
+    }
+    [7]=>
+    array(9) {
+      ["intersections"]=>
+      array(1) {
+        [0]=>
+        array(4) {
+          ["in"]=>
+          int(0)
+          ["entry"]=>
+          array(1) {
+            [0]=>
+            bool(true)
+          }
+          ["bearings"]=>
+          array(1) {
+            [0]=>
+            int(70)
+          }
+          ["location"]=>
+          array(2) {
+            [0]=>
+            float(-7.932773)
+            [1]=>
+            float(37.019159)
+          }
+        }
+      }
+      ["driving_side"]=>
+      string(5) "right"
+      ["geometry"]=>
+      string(10) "wh}`Fxjlo@"
+      ["mode"]=>
+      string(7) "driving"
+      ["maneuver"]=>
+      array(6) {
+        ["bearing_after"]=>
+        int(0)
+        ["bearing_before"]=>
+        int(250)
+        ["location"]=>
+        array(2) {
+          [0]=>
+          float(-7.932773)
+          [1]=>
+          float(37.019159)
+        }
+        ["modifier"]=>
+        string(4) "left"
+        ["type"]=>
+        string(6) "arrive"
+        ["instruction"]=>
+        string(49) "You have arrived at your destination, on the left"
+      }
+      ["weight"]=>
+      int(0)
+      ["duration"]=>
+      int(0)
+      ["name"]=>
+      string(20) "Rua Cruz das Mestras"
+      ["distance"]=>
+      int(0)
+    }
+  }
   ["distance"]=>
-  float(3891.8)
+  float(1332.6)
 }

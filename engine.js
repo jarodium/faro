@@ -52,11 +52,6 @@ io.on('connection', function (client) {
   });
 });
 
-
-
-
-
-
 /**
  * ZMQ LOGIC *
  * 
@@ -68,22 +63,20 @@ responder.on('message', function(request) {
   var r = request.toString();
   r = r.slice(r.indexOf("{"),r.lastIndexOf("}")+1);
   r = JSON.parse(r);
-  if (r.cmd === "critter_move") {
-    let obj = critters.find(o => o.id === r.id);
+  
+  if (r.cmd === "spawn-critter") {
+    let obj = critters.find(o => o.id === r.body.id);
     
-    if (obj) {
-      obj.pos = r.pos;
-      
-    }
-    else {
-      critters.push(r);
-    }
-    io.sockets.emit('crittersUpdated',critters);
+    if (!obj) { critters.push(r.body); }
+    io.sockets.emit('critterSpawned',critters);
+  }
+  if (r.cmd === 'move-critter') {
+    io.sockets.emit('critterMoved',r.body);
   }
   
   
   // send reply back to client.
-  responder.send("node 200");
+  responder.send(request.toString());
   
 });
 

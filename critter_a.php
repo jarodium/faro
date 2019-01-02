@@ -7,17 +7,9 @@
     $CFG = json_decode(file_get_contents("config.json"),true);
     define("MAPBOXK",$CFG["mapboxkey"]);
     
-    
-    //$res = $mapbox->request("https://api.mapbox.com/directions/v5/mapbox/cycling/-122.42,37.78;-77.03,38.91", "GET");
-    
-    
     $points = [
-        [-7.9504845,37.0345556],
-        [-7.9424287,37.009778],
-        [-7.9185678,37.0092297],
-        [-7.9120446,37.0163574],
-        [-7.9185555,37.0344528],
-        [-7.9504845,37.0345556]
+        [37.0212903,-7.9414567],
+        [37.0189683,-7.9326587]
     ];
     
     $critter = new Creature(
