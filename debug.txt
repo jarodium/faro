@@ -1,62 +1,0 @@
-array(3) {
-  ["info"]=>
-  array(3) {
-    ["request"]=>
-    array(5) {
-      ["encoded"]=>
-      string(94) "https://api.mapbox.com/directions/v5/mapbox/cycling/-7.9368,37.0206;-7.9299,37.0239?steps=true"
-      ["unencoded"]=>
-      string(94) "https://api.mapbox.com/directions/v5/mapbox/cycling/-7.9368,37.0206;-7.9299,37.0239?steps=true"
-      ["method"]=>
-      string(3) "GET"
-      ["time"]=>
-      float(0.74390006065369)
-      ["parameters"]=>
-      array(1) {
-        ["steps"]=>
-        string(4) "true"
-      }
-    }
-    ["driver"]=>
-    string(24) "mapbox-php-driver-v0.1.0"
-    ["code"]=>
-    int(200)
-  }
-  ["headers"]=>
-  array(16) {
-    [0]=>
-    string(16) "HTTP/1.1 200 OK"
-    [1]=>
-    string(46) "Content-Type: application/json; charset=utf-8"
-    [2]=>
-    string(21) "Content-Length: 7542"
-    [3]=>
-    string(23) "Connection: keep-alive"
-    [4]=>
-    string(36) "Date: Tue, 18 Dec 2018 21:32:44 GMT"
-    [5]=>
-    string(22) "x-powered-by: Express"
-    [6]=>
-    string(31) "access-control-allow-origin: *"
-    [7]=>
-    string(24) "X-Rate-Limit-Limit: 300"
-    [8]=>
-    string(26) "X-Rate-Limit-Interval: 60"
-    [9]=>
-    string(25) "Cache-Control: max-age=0"
-    [10]=>
-    string(43) "ETag: W/"1d76-TII986FxM4qrArQc5bLsUEyNGyo""
-    [11]=>
-    string(14) "X-Shard-Id: 2"
-    [12]=>
-    string(22) "Vary: Accept-Encoding"
-    [13]=>
-    string(30) "X-Cache: Miss from cloudfront"
-    [14]=>
-    string(70) "Via: 1.1 40f375a15596f8d7b418a9c5dccce3d3.cloudfront.net (CloudFront)"
-    [15]=>
-    string(70) "X-Amz-Cf-Id: QAR87ZVelhLfn1wlz66TsEnBZrO9_ZyEdP2uRmNJuviCfIAoBedahA=="
-  }
-  ["body"]=>
-  string(7542) "{"routes":[{"geometry":"qq}`Fzcmo@gAyDoAj@CyIB]z@iDCQOIeIw@sGoC~@uAfC{J?UGQcAg@I@GBW~@[^","legs":[{"summary":"Rua do Alportel, Rua Doutor Guilherme Centazzi","weight":328.7,"duration":301.6,"steps":[{"intersections":[{"out":0,"entry":[true],"bearings":[64],"location":[-7.936782,37.02057]}],"driving_side":"right","geometry":"qq}`Fzcmo@gAyD","mode":"cycling","maneuver":{"bearing_after":64,"bearing_before":0,"location":[-7.936782,37.02057],"type":"depart","instruction":"Head northeast on Rua da Atalaia"},"weight":30.2,"duration":30.2,"name":"Rua da Atalaia","distance":91.7},{"intersections":[{"out":2,"in":1,"entry":[true,false,true],"bearings":[60,240,330],"location":[-7.935851,37.020927]},{"out":2,"in":0,"entry":[false,true,true],"bearings":[150,255,330],"location":[-7.935952,37.021101]}],"driving_side":"right","geometry":"ys}`F`~lo@a@Rm@V","mode":"cycling","maneuver":{"bearing_after":334,"bearing_before":63,"location":[-7.935851,37.020927],"modifier":"left","type":"turn","instruction":"Turn left onto Rua Manuel Ascensão"},"weight":18.2,"duration":18.2,"name":"Rua Manuel Ascensão","distance":48.4},{"intersections":[{"out":0,"in":1,"entry":[true,false,true],"bearings":[90,150,285],"location":[-7.936072,37.021325]},{"out":1,"in":2,"entry":[true,true,false],"bearings":[75,90,270],"location":[-7.935643,37.021332]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[105,150,270],"location":[-7.934342,37.021351]},{"out":1,"in":3,"entry":[true,true,true,false],"bearings":[0,105,180,285],"location":[-7.934247,37.02134]},{"out":0,"in":3,"entry":[true,true,true,false],"bearings":[115,116,201,280],"location":[-7.934188,37.021332]}],"driving_side":"right","geometry":"iv}`Fl_mo@?uA?aAC_A?k@Ae@@c@?K@Q@KLc@Rs@","mode":"cycling","maneuver":{"bearing_after":88,"bearing_before":336,"location":[-7.936072,37.021325],"modifier":"right","type":"end of road","instruction":"Turn right onto Rua Aboim Ascensão"},"weight":63.4,"duration":50.599999999999994,"name":"Rua Aboim Ascensão","distance":210.7},{"intersections":[{"out":0,"in":2,"entry":[true,true,false],"bearings":[115,116,296],"location":[-7.933752,37.021161]}],"driving_side":"right","geometry":"gu}`F|plo@@QV_A","mode":"cycling","maneuver":{"bearing_after":113,"bearing_before":115,"location":[-7.933752,37.021161],"modifier":"slight left","type":"turn","instruction":"Make a slight left"},"weight":10.3,"duration":10.3,"name":"","distance":39.5},{"intersections":[{"out":0,"in":2,"entry":[true,true,false],"bearings":[90,105,300],"location":[-7.933344,37.021026]},{"out":0,"in":2,"entry":[true,true,false,true],"bearings":[90,135,270,315],"location":[-7.933309,37.021027]},{"out":0,"in":2,"entry":[true,true,false,true],"bearings":[30,120,270,300],"location":[-7.93328,37.021028]}],"driving_side":"right","geometry":"mt}`Fjnlo@?E?ECEOI","mode":"cycling","maneuver":{"bearing_after":87,"bearing_before":115,"location":[-7.933344,37.021026],"modifier":"left","type":"turn","instruction":"Turn left"},"weight":9.5,"duration":8.3,"name":"","distance":19.5},{"intersections":[{"out":0,"in":3,"entry":[true,true,true,false],"bearings":[0,135,180,210],"location":[-7.933199,37.021131]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[0,165,180],"location":[-7.933192,37.021177]},{"out":0,"in":1,"entry":[true,false,true],"bearings":[15,180,285],"location":[-7.933105,37.021738]},{"out":0,"in":1,"entry":[true,false,true],"bearings":[15,195,300],"location":[-7.932925,37.022731]},{"out":0,"in":1,"entry":[true,false,true],"bearings":[24,204,213],"location":[-7.932765,37.023058]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[15,135,210],"location":[-7.932544,37.023458]},{"out":0,"in":1,"entry":[true,false,true],"bearings":[15,195,285],"location":[-7.932391,37.023764]}],"driving_side":"right","geometry":"au}`Fnmlo@IAoBOqD]SEEASIg@SoAm@{@]kAe@","mode":"cycling","maneuver":{"bearing_after":5,"bearing_before":30,"location":[-7.933199,37.021131],"modifier":"slight left","type":"new name","instruction":"Continue slightly left onto Rua do Alportel"},"weight":103.69999999999999,"duration":90.6,"name":"Rua do Alportel","distance":349.3},{"intersections":[{"out":1,"in":2,"entry":[true,true,false,true],"bearings":[30,135,195,330],"location":[-7.932202,37.024142]},{"out":1,"in":3,"entry":[true,true,true,false],"bearings":[45,120,225,315],"location":[-7.93177,37.02382]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[120,150,300],"location":[-7.931701,37.023793]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[105,150,300],"location":[-7.931536,37.023733]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[120,255,285],"location":[-7.931398,37.023688]},{"out":0,"in":1,"entry":[true,true,false],"bearings":[120,285,300],"location":[-7.931214,37.023624]},{"out":1,"in":2,"entry":[true,true,false],"bearings":[0,120,300],"location":[-7.930873,37.023504]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[120,150,300],"location":[-7.930708,37.023446]},{"out":0,"in":3,"entry":[true,true,true,false],"bearings":[120,150,255,300],"location":[-7.930532,37.023384]},{"out":1,"in":2,"entry":[true,true,false],"bearings":[75,120,300],"location":[-7.930365,37.023325]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[120,255,300],"location":[-7.930297,37.023301]},{"out":0,"in":2,"entry":[true,true,false,true],"bearings":[120,210,300,345],"location":[-7.930098,37.02323]}],"driving_side":"right","geometry":"{g~`Ffglo@h@u@NWDGDMFSBKBOBKLe@VcAH_@Lc@H_@DMLg@Pm@","mode":"cycling","maneuver":{"bearing_after":133,"bearing_before":21,"location":[-7.932202,37.024142],"modifier":"right","type":"turn","instruction":"Turn right onto Rua Doutor Guilherme Centazzi"},"weight":59,"duration":59,"name":"Rua Doutor Guilherme Centazzi","distance":237.7},{"intersections":[{"out":0,"in":2,"entry":[true,true,false],"bearings":[75,120,300],"location":[-7.929865,37.023143]},{"out":0,"in":2,"entry":[true,true,false],"bearings":[30,165,255],"location":[-7.929669,37.023182]},{"out":2,"in":1,"entry":[true,false,true],"bearings":[105,165,300],"location":[-7.9295,37.023612]}],"driving_side":"right","geometry":"sa~`Ftxko@?UCICGcAg@I@GBEJQr@","mode":"cycling","maneuver":{"bearing_after":71,"bearing_before":113,"location":[-7.929865,37.023143],"modifier":"left","type":"turn","instruction":"Turn left onto Praça de Tânger"},"weight":29.5,"duration":29.5,"name":"Praça de Tânger","distance":102.2},{"intersections":[{"out":2,"in":0,"entry":[false,true,true],"bearings":[120,240,315],"location":[-7.92982,37.023733]}],"driving_side":"right","geometry":"ie~`Fjxko@GJGJGDC@","mode":"cycling","maneuver":{"bearing_after":319,"bearing_before":293,"location":[-7.92982,37.023733],"modifier":"slight right","type":"turn","instruction":"Make a slight right onto Rua Cidade de Bolama"},"weight":4.9,"duration":4.9,"name":"Rua Cidade de Bolama","distance":20.5},{"intersections":[{"in":0,"entry":[true],"bearings":[151],"location":[-7.929976,37.023865]}],"driving_side":"right","geometry":"ef~`Fjyko@","mode":"cycling","maneuver":{"bearing_after":0,"bearing_before":331,"location":[-7.929976,37.023865],"modifier":"right","type":"arrive","instruction":"You have arrived at your destination, on the right"},"weight":0,"duration":0,"name":"Rua Cidade de Bolama","distance":0}],"distance":1119.6}],"weight_name":"cyclability","weight":328.7,"duration":301.6,"distance":1119.6}],"waypoints":[{"name":"Rua da Atalaia","location":[-7.936782,37.02057]},{"name":"Rua Cidade de Bolama","location":[-7.929976,37.023865]}],"code":"Ok","uuid":"cjpu9l59200fg3ko2b2bjxkla"}"
-}

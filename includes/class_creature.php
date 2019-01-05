@@ -127,11 +127,20 @@
                 $this->iri++;
                 $this->__issueCommand("move-critter",$cmd);
                 
-                //se chegou ao fim da rota
-                    //se ainda exisitirem spawn points
-                        //fazer uma rota desde o fim da rota para o spawn point seguinte
-                    //se não
-                        //copiar os spawnpoints da cópia
+                if (!isset($this->stats["route"][$this->iri])) {
+                    //se chegou ao fim da rota
+                        //ver se existem spawn points
+                    $tsp = count($this->spawn_points);
+                    if ($tsp>0 && $tsp%2==0) {
+                        //ainda existem spawn points
+                            //fazer uma rota desde o fim da rota para o spawn point seguinte   
+                    }
+                    else {
+                        //se não
+                            //repor os spawn points a partir da cópia
+                        
+                    }
+                }
             }
             
             

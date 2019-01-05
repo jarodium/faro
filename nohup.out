@@ -26,3 +26,24 @@ Stack trace:
 #2 /home/pedroh/c9sdk/meh4/server.php(3): include('/home/pedroh/c9...')
 #3 {main}
   thrown in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php on line 72
+PHP Fatal error:  Uncaught ZMQPollException: Poll failed: Interrupted system call in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php:72
+Stack trace:
+#0 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(72): ZMQPoll->poll(Array, Array, 2500)
+#1 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(16): mdbroker->listen()
+#2 /home/pedroh/c9sdk/meh4/server.php(3): include('/home/pedroh/c9...')
+#3 {main}
+  thrown in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php on line 72
+PHP Fatal error:  Uncaught ZMQPollException: Poll failed: Interrupted system call in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php:72
+Stack trace:
+#0 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(72): ZMQPoll->poll(Array, Array, 2500)
+#1 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(16): mdbroker->listen()
+#2 /home/pedroh/c9sdk/meh4/server.php(3): include('/home/pedroh/c9...')
+#3 {main}
+  thrown in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php on line 72
+PHP Fatal error:  Uncaught ZMQPollException: Poll failed: Interrupted system call in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php:72
+Stack trace:
+#0 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(72): ZMQPoll->poll(Array, Array, 2500)
+#1 /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php(16): mdbroker->listen()
+#2 /home/pedroh/c9sdk/meh4/server.php(3): include('/home/pedroh/c9...')
+#3 {main}
+  thrown in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php on line 72

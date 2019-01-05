@@ -11,6 +11,7 @@
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
    <script src="js/leaflet.rotatedMarker.js"></script>
+   <script src="js/compass.js"></script>
    <style>
        html, body { width:100%; height:100%; }
    </style>
@@ -19,6 +20,8 @@
     var markers = {};
     var myIcon;
     var myIcon2;
+    var myIcon3;
+    var myMaker;
     //bind listeners
     socket.on('critterMoved', function(data) {
         console.log("critterMoved");
@@ -57,11 +60,16 @@
     
     function broadcastPosition(position) {
         socket.emit('updateCoord', position.coords);
+        console.log(position.coords);
+        myMaker.setLatLng([position.coords.latitude,position.coords.longitude])/*.setRotationAngle(man.bea)*/;
     }
     
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(broadcastPosition);
+            //navigator.geolocation.getCurrentPosition(broadcastPosition);
+            var watchID = navigator.geolocation.watchPosition(function(position) {
+                broadcastPosition(position);
+            });
         } else {
             alert("Geolocation is not supported by this browser.");
         }
@@ -107,15 +115,36 @@
             /*shadowAnchor: [4, 62],*/  // the same for the shadow
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
-        L.marker(myLat, {icon: myIcon}).addTo(map);
+        myMaker = L.marker(myLat, {icon: myIcon3}).addTo(map);
+        
     }
 </script>
 </head>
 <body>
     <div id="map" style="width:100%; height:100%;"></div>
-    
+    <!--<div id="start" style="top:0; position:absolute; z-index:9999;border:1px solid red; width:100%; height:100%; background:white">
+        TAP
+    </div>-->
     <script>
+    function addEvent(el, type, handler) {
+       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
+    }
         initmap([37.0345556,-7.9504845]);
+        var el = document.querySelector('#start');
+        // attach anonymous function to click event
+        /*addEvent(el, 'touchstart', function(){ 
+            alert("teste");
+            getLocation();
+        document.querySelector('#start'); // select the first returned <div> element 
+el.parentNode.removeChild(el);
+        })*/    
+        /*var watchID = Compass.watch(function (heading) {
+            //$('.degrees').text(heading);
+            console.log(heading);
+        });
+        Compass.init(function (method) {
+  console.log('Compass heading by ' + method);
+});*/
     </script>
 </body>
 </html>

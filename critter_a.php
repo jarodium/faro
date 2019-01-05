@@ -13,7 +13,8 @@
     ];
     
     $critter = new Creature(
-        ["id" => "DRGN01","name" => "Dragon","spawn_points" => $points,"speed" => 50]
+        //fov alcance do olho esquerdo até ao olho direito
+        ["id" => "DRGN01","name" => "Dragon","spawn_points" => $points,"speed" => 50,"fov" => [-180,-140,140,180],"fovd" => 100]
     );
     
     while (true) {
