@@ -14,6 +14,9 @@
         private $stats = [];
         private $spawn_points = [];
         private $spawn_points_copy = [];
+        private $status = [
+            "MOVEMENT" => "IDLE"
+        ];
         private $iri = 0; //internal route index;
         
         public function __construct($stats) {
@@ -122,11 +125,6 @@
                 $this->move();
             }
             else {
-                //movimentar a creatura para o próximo ponto
-                $cmd = ["id" => $this->stats["id"], "nextpos" => $this->stats["route"][$this->iri]];
-                $this->iri++;
-                $this->__issueCommand("move-critter",$cmd);
-                
                 if (!isset($this->stats["route"][$this->iri])) {
                     //se chegou ao fim da rota
                         //ver se existem spawn points
@@ -141,9 +139,20 @@
                         
                     }
                 }
+                else {
+                    //movimentar a creatura para o próximo ponto
+                    $cmd = ["id" => $this->stats["id"], "nextpos" => $this->stats["route"][$this->iri]];
+                    $this->iri++;
+                    $this->__issueCommand("move-critter",$cmd);
+                }
             }
             
             
+        }
+        
+        public function shutdown() {
+            $cmd = ["id" => $this->stats["id"]];
+            $this->__issueCommand("kill-critter",$cmd);
         }
     }
 ?>

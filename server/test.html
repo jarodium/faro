@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
    crossorigin=""/>
@@ -11,24 +10,69 @@
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
    <script src="js/leaflet.rotatedMarker.js"></script>
-   <script src="js/compass.js"></script>
+   <script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+  crossorigin="anonymous"></script>
    <style>
        html, body { width:100%; height:100%; }
    </style>
 <script>
-    var socket = io.connect('https://192.168.56.101:3000');
+    Math.radians = function(degrees) {
+        return degrees * Math.PI / 180;
+    };
+ 
+    // Converts from radians to degrees.
+    Math.degrees = function(radians) {
+        return radians * 180 / Math.PI;
+    };
     var markers = {};
     var myIcon;
     var myIcon2;
     var myIcon3;
     var myMaker;
+    var myMaker2;
     var map;
+    
+    
+    var p1 = {
+        lt : 37.0212903,
+        lg : -7.9414567,
+        be : 40,
+        fov : [-180,-140,140,180],
+        fovd : 100
+    }
+
+    var p2 = {
+        lt : 37.0212903,
+        lg : -7.9414567,
+        be : 45,
+        fov : [-180,-140,140,180],
+        fovd : 50
+    }
+    
+    var R = 6378.1 //Radius of the Earth
+    
+    function getPoint(centro,distancia,direccao) {
+        distancia = distancia / 1000;
+        direccao = Math.radians(direccao);
+        
+        console.log(centro+"--"+distancia+" - "+direccao);
+        let lat1 = Math.radians(centro[0]) //Current lat point converted to radians
+        let lon1 = Math.radians(centro[1]) //Current long point converted to radians
+
+        let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distancia/R) + Math.cos(lat1)*Math.sin(distancia/R)*Math.cos(direccao));
+        let lon2 = lon1 + Math.atan2(Math.sin(direccao)*Math.sin(distancia/R)*Math.cos(lat1),Math.cos(distancia/R)-Math.sin(lat1)*Math.sin(lat2))
+        
+        lat2 = Math.degrees(lat2)
+        lon2 = Math.degrees(lon2)
+        return new Array(lat2,lon2);
+    }
     //bind listeners
-    socket.on('critterMoved', function(data) {
+    /*socket.on('critterMoved', function(data) {
         console.log("critterMoved");
         console.log(data);
         var id = data.id;
-        /*console.log(id);*/
         if (markers[id]) {
             //console.log("movendo");
             var man = data.nextpos;
@@ -46,9 +90,9 @@
                 //markers[id] = L.marker([0,0]).addTo(map);
                 markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
             }
-            /*else {
+            
                 markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
-            }*/
+        
         }
         //socket.emit('my other event', { my: 'data' });
     });
@@ -74,10 +118,10 @@
     
     
     function updateDeviceP(position) {
-        /*monitorizar o gps do utilizador */
         socket.emit('updateCoord', position.coords);
         console.log(position.coords);
-        myMaker.setLatLng([position.coords.latitude,position.coords.longitude])/*.setRotationAngle(man.bea)*/;
+        myMaker.setLatLng([position.coords.latitude,position.coords.longitude])
+        //.setRotationAngle(man.bea)
     }
     
 
@@ -100,18 +144,24 @@
     function getLocation() {
         
         
-    }
+    }*/
+    
     function initmap(myLat) {
 	    // set up the map
 	    map = new L.Map('map');
-
+    /*var editableLayers = L.featureGroup().addTo(map);
+    var drawControl = new L.Control.Draw({
+        edit: {
+            featureGroup: editableLayers
+        }
+    });*/
 	    // create the tile layer with correct attribution
 	    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 15, attribution: osmAttrib});		
+	    var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 18, attribution: osmAttrib});		
 
 	    // start the map in South-East England
-	    map.setView(myLat,12);
+	    map.setView([37.0214493,-7.9330167],15);
 	    map.addLayer(osm);
 	    
 	    //getLocation();
@@ -126,51 +176,63 @@
         });
         myIcon2 = L.icon({
             iconUrl: 'img/right-arrow.png',
-           /*shadowUrl: 'img/leaf-shadow.png',*/
             iconSize:     [23, 23], // size of the icon
-            /*shadowSize:   [50, 64],*/ // size of the shadow
             iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
-            /*shadowAnchor: [4, 62],*/  // the same for the shadow
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
         myIcon3 = L.icon({
             iconUrl: 'img/right-arrow2.png',
-           /*shadowUrl: 'img/leaf-shadow.png',*/
             iconSize:     [23, 23], // size of the icon
-            /*shadowSize:   [50, 64],*/ // size of the shadow
             iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
-            /*shadowAnchor: [4, 62],*/  // the same for the shadow
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
-        myMaker = L.marker(myLat, {icon: myIcon3}).addTo(map);
+        myPoint = L.marker([37.0214493,-7.9330167], {icon: myIcon}).addTo(map);
         
+        myMaker = L.marker([37.0214493,-7.9330167], {icon: myIcon2}).addTo(map);
+        myMaker2 = L.marker([37.0216033,-7.9345827], {icon: myIcon3}).addTo(map);
+        
+        
+        
+        var m1Ang = 0;
+        var m1Ang2 = 0;
+        
+        $("body").on("keypress",function (e) {
+            if (e.which == 97) {
+                //a
+                m1Ang2 -= 25;
+                myMaker2.setRotationAngle(m1Ang2);
+            }
+            if (e.which == 100) {
+                //d
+                m1Ang2 += 25;
+                myMaker2.setRotationAngle(m1Ang2);
+            }
+            //console.log(e.which);
+            if (e.which == 106) {
+                //a
+                m1Ang -= 25;
+                myMaker.setRotationAngle(m1Ang);
+            }
+            if (e.which == 108) {
+                //d
+                m1Ang += 25;
+                myMaker.setRotationAngle(m1Ang);
+            }
+            myPoint.setLatLng(getPoint([37.0214493,-7.9330167],50,m1Ang));
+        });
     }
 </script>
 </head>
 <body>
     <div id="map" style="width:100%; height:100%;"></div>
-    <div id="start" style="top:0; position:absolute; z-index:9999;border:1px solid red; width:100%; height:100%; background:white">
-        TAP
-    </div>
     <script>
     function addEvent(el, type, handler) {
        if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
     }
-        initmap([37.0345556,-7.9504845]);
+        initmap();
         var el = document.querySelector('#start');
         // attach anonymous function to click event
-        addEvent(el, 'touchstart', function(){ 
-            initDevice();
-            document.querySelector('#start'); // select the first returned <div> element 
-            el.parentNode.removeChild(el);
-        })
-        var watchID = Compass.watch(function (heading) {
-            //$('.degrees').text(heading);
-            console.log(heading);
-        });
-        Compass.init(function (method) {
-            console.log('Compass heading by ' + method);
-        });
+       
     </script>
 </body>
 </html>

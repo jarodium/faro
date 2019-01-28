@@ -1,19 +1,9 @@
-var fs = require('fs');
 const express = require('express');
 const app = express();
-
-var options = {
-  key: fs.readFileSync('./file.pem'),
-  cert: fs.readFileSync('./file.crt')
-};
-
-var https = require('https');
-//var server = require('http').Server(app);
-var server = https.createServer(options, app);
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var zmq = require('zeromq');
 var responder = zmq.socket('rep');
-
 
 var clients = []; //store the clients
 var clientsCoords  = [];
