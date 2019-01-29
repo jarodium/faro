@@ -5,6 +5,7 @@ class Player {
     constructor() {
         this.device = {
             _position : [0,0],
+            _heading : 0,
             _leafIcon : L.icon({
                 iconUrl: 'img/right-arrow2.png',
                 iconSize:     [23, 23], // size of the icon
@@ -17,6 +18,7 @@ class Player {
         }
         
         this.stats = {
+            //fov : [-45,-135,45,135], //field of vision 
             fov : [-45,45], //field of vision 
             dov : 10 //distance of vision
         }
@@ -42,19 +44,63 @@ class Player {
     }
     
     updatePosition(position) {
-        console.log(position);
-        socket.emit('updateCoord', position.coords);
+        //console.log(position);
+        
         this.device._position = [ position.coords.latitude, position.coords.longitude ];
+        //this.device._heading = position.heading;
         //updates self marker
         this.device._leafMarker.setLatLng(this.device._position);
         
         //updates self field of vision
         if (this.stats.fov.length == 2) {
+            //console.log(this.device._position);
+            //console.log(this.stats.dov);
+            //console.log(this.device._heading);
+            //console.log(this.stats.fov[0]);
             
+            let latlngs = [
+                getPoint(
+                    this.device._position ,0,0
+                ),
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[0]
+                ),
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[1]
+                )
+            ];
+            this._fov_pol = L.polygon(latlngs, {color: 'red'}).addTo(window.map);
         }
         if (this.stats.fov.length == 4) {
+            let latlngs = [
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[0]
+                ),
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[1]
+                ),
+                getPoint(
+                    this.device._position ,0,0
+                )
+            ];
             
+            let latlngs2 = [
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[2]
+                ),
+                getPoint(
+                    this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[3]
+                ),
+                getPoint(
+                    this.device._position ,0,0
+                )
+            ];
+            
+            this._fov_pol = L.polygon(latlngs, {color: 'red'}).addTo(window.map);
+            this._fov_pol2 = L.polygon(latlngs2, {color: 'red'}).addTo(window.map);
         }
+        
+        socket.emit('updateCoord', position.coords);
     }
     
    
