@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
    crossorigin=""/>
@@ -17,222 +18,45 @@
    <style>
        html, body { width:100%; height:100%; }
    </style>
-<script>
-    Math.radians = function(degrees) {
-        return degrees * Math.PI / 180;
-    };
- 
-    // Converts from radians to degrees.
-    Math.degrees = function(radians) {
-        return radians * 180 / Math.PI;
-    };
-    var markers = {};
-    var myIcon;
-    var myIcon2;
-    var myIcon3;
-    var myMaker;
-    var myMaker2;
-    var map;
-    
-    
-    var p1 = {
-        lt : 37.0212903,
-        lg : -7.9414567,
-        be : 40,
-        fov : [-180,-140,140,180],
-        fovd : 100
-    }
-
-    var p2 = {
-        lt : 37.0212903,
-        lg : -7.9414567,
-        be : 45,
-        fov : [-180,-140,140,180],
-        fovd : 50
-    }
-    
-    var R = 6378.1 //Radius of the Earth
-    
-    function getPoint(centro,distancia,direccao) {
-        distancia = distancia / 1000;
-        direccao = Math.radians(direccao);
-        
-        console.log(centro+"--"+distancia+" - "+direccao);
-        let lat1 = Math.radians(centro[0]) //Current lat point converted to radians
-        let lon1 = Math.radians(centro[1]) //Current long point converted to radians
-
-        let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distancia/R) + Math.cos(lat1)*Math.sin(distancia/R)*Math.cos(direccao));
-        let lon2 = lon1 + Math.atan2(Math.sin(direccao)*Math.sin(distancia/R)*Math.cos(lat1),Math.cos(distancia/R)-Math.sin(lat1)*Math.sin(lat2))
-        
-        lat2 = Math.degrees(lat2)
-        lon2 = Math.degrees(lon2)
-        return new Array(lat2,lon2);
-    }
-    //bind listeners
-    /*socket.on('critterMoved', function(data) {
-        console.log("critterMoved");
-        console.log(data);
-        var id = data.id;
-        if (markers[id]) {
-            //console.log("movendo");
-            var man = data.nextpos;
-            console.log(man);
-            markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
-            
-        }
-    })
-    socket.on('critterSpawned', function (data) {
-        console.log("critterSpawned");
-        console.log(data);
-        for (var x in data) {
-            var id = data[x].id;
-            if (!markers[id]) {
-                //markers[id] = L.marker([0,0]).addTo(map);
-                markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
-            }
-            
-                markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
-        
-        }
-        //socket.emit('my other event', { my: 'data' });
-    });
-    socket.on('critterDestroy', function (data) {
-        console.log("critterDestroy");
-        console.log(data);
-        var id = data.id;
-        
-        if (markers[id]) {
-            //console.log("movendo");
-            //markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
-            map.removeLayer(markers[id]);
-            markers.splice(markers.findIndex(v => v.id === id), 1);
-            
-        }
-        //socket.emit('my other event', { my: 'data' });
-    });
-    socket.on('coordsUpdated', function (data) {
-        console.log("coordsUpdated");
-        console.log(data);
-        //socket.emit('my other event', { my: 'data' });
-    });
-    
-    
-    function updateDeviceP(position) {
-        socket.emit('updateCoord', position.coords);
-        console.log(position.coords);
-        myMaker.setLatLng([position.coords.latitude,position.coords.longitude])
-        //.setRotationAngle(man.bea)
-    }
-    
-
-    
-    function initDevice() {
-        
-        if (navigator.geolocation) {
-            let options = {enableHighAccuracy: true,timeout: 5000,maximumAge: 0};
-            
-            navigator.geolocation.watchPosition(function(position) {
-                updateDeviceP(position);
-            }, function(err) {
-                console.warn('ERROR(' + err.code + '): ' + err.message);
-            }, options);
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
-    }
-    
-    function getLocation() {
-        
-        
-    }*/
-    
-    function initmap(myLat) {
-	    // set up the map
-	    map = new L.Map('map');
-    /*var editableLayers = L.featureGroup().addTo(map);
-    var drawControl = new L.Control.Draw({
-        edit: {
-            featureGroup: editableLayers
-        }
-    });*/
-	    // create the tile layer with correct attribution
-	    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 18, attribution: osmAttrib});		
-
-	    // start the map in South-East England
-	    map.setView([37.0214493,-7.9330167],15);
-	    map.addLayer(osm);
-	    
-	    //getLocation();
-	    myIcon = L.icon({
-            iconUrl: 'img/leaf-green.png',
-            shadowUrl: 'img/leaf-shadow.png',
-            iconSize:     [38, 95], // size of the icon
-            shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
-        myIcon2 = L.icon({
-            iconUrl: 'img/right-arrow.png',
-            iconSize:     [23, 23], // size of the icon
-            iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
-        });
-        myIcon3 = L.icon({
-            iconUrl: 'img/right-arrow2.png',
-            iconSize:     [23, 23], // size of the icon
-            iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
-        });
-        myPoint = L.marker([37.0214493,-7.9330167], {icon: myIcon}).addTo(map);
-        
-        myMaker = L.marker([37.0214493,-7.9330167], {icon: myIcon2}).addTo(map);
-        myMaker2 = L.marker([37.0216033,-7.9345827], {icon: myIcon3}).addTo(map);
-        
-        
-        
-        var m1Ang = 0;
-        var m1Ang2 = 0;
-        
-        $("body").on("keypress",function (e) {
-            if (e.which == 97) {
-                //a
-                m1Ang2 -= 25;
-                myMaker2.setRotationAngle(m1Ang2);
-            }
-            if (e.which == 100) {
-                //d
-                m1Ang2 += 25;
-                myMaker2.setRotationAngle(m1Ang2);
-            }
-            //console.log(e.which);
-            if (e.which == 106) {
-                //a
-                m1Ang -= 25;
-                myMaker.setRotationAngle(m1Ang);
-            }
-            if (e.which == 108) {
-                //d
-                m1Ang += 25;
-                myMaker.setRotationAngle(m1Ang);
-            }
-            myPoint.setLatLng(getPoint([37.0214493,-7.9330167],50,m1Ang));
-        });
-    }
-</script>
 </head>
 <body>
     <div id="map" style="width:100%; height:100%;"></div>
+    <div id="start" style="top:0; position:absolute; z-index:9999;border:1px solid red; width:100%; height:100%; background:white">
+        TAP
+    </div>
     <script>
-    function addEvent(el, type, handler) {
-       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
-    }
-        initmap();
-        var el = document.querySelector('#start');
+        var socket = io.connect('https://192.168.56.101:3000');
+        var markers = {};
+        window.map = {};
+        var myIcon2 = L.icon({
+            iconUrl: 'img/right-arrow.png',
+           /*shadowUrl: 'img/leaf-shadow.png',*/
+            iconSize:     [23, 23], // size of the icon
+            /*shadowSize:   [50, 64],*/ // size of the shadow
+            iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
+            /*shadowAnchor: [4, 62],*/  // the same for the shadow
+            popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
+        });
+    </script>
+    <script src="js/utils.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/player.js"></script>
+    <script>
+        initmap([37.0214493,-7.9330167]);
         // attach anonymous function to click event
-       
+        /*var coordinates = [
+	        {latitude: 37.0190, longitude: -7.9327, bea:0},
+            {latitude: 37.019159, longitude: -7.932773, bea: 250},
+            {latitude: 37.018938, longitude: -7.933596, bea:8},
+            {latitude: 37.02091, longitude: -7.933237, bea:344},
+            {latitude: 37.021287, longitude: -7.939309, bea:275},
+            {latitude: 37.020878, longitude: -7.939401, bea:236},
+            {latitude: 37.020171, longitude: -7.940742, bea:323},
+            {latitude: 37.021289, longitude: -7.941489, bea:0},
+        ];
+        var simulation = GeolcationSimulation({coords: coordinates});
+        //when you are ready, fire it up.
+        simulation.start(); */
     </script>
 </body>
 </html>
