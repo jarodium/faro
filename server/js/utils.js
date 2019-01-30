@@ -25,6 +25,82 @@ function getPoint(centro,distancia,direccao) {
     return new Array(lat2,lon2);
 }
 
+https://stackoverflow.com/questions/34967607/rotate-polygon-around-point-in-leaflet-map
+
+function rotatePoints(center, points, yaw) {
+    var res = []
+    var angle = yaw * (Math.PI / 180)
+    for(var i=0; i<points.length; i++) {
+      var p = points[i]
+      // translate to center
+      var p2 = [ p[0]-center[0], p[1]-center[1] ]
+      // rotate using matrix rotation
+      var p3 = [ Math.cos(angle)*p2[0] - Math.sin(angle)*p2[1], Math.sin(angle)*p2[0] + Math.cos(angle)*p2[1]]
+      // translate back to center
+      var p4 = [ p3[0]+center[0], p3[1]+center[1]]
+      // done with that point
+      res.push(p4)
+    }
+    return res
+  }
+
 function addEvent(el, type, handler) {
    if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
+}
+
+class DispatcherEvent {
+    constructor(eventName) {
+        this.eventName = eventName;
+        this.callbacks = [];
+    }
+
+    registerCallback(callback) {
+        this.callbacks.push(callback);
+    }
+
+    unregisterCallback(callback) {
+        const index = this.callbacks.indexOf(callback);
+        if (index > -1) {
+            this.callbacks.splice(index, 1);
+        }
+    }
+
+     fire(data) {
+        const callbacks = this.callbacks.slice(0);
+        callbacks.forEach((callback) => {
+            callback(data);
+        });
+    }
+}
+
+class Dispatcher {
+    constructor() {
+        this.events = {};
+    }
+
+    dispatch(eventName, data) {
+        const event = this.events[eventName];
+        if (event) {
+            event.fire(data);
+        }
+    }
+
+    on(eventName, callback) {
+        let event = this.events[eventName];
+        if (!event) {
+            event = new DispatcherEvent(eventName);
+            this.events[eventName] = event;
+        }
+        event.registerCallback(callback);
+    }
+
+    off(eventName, callback) {
+        const event = this.events[eventName];
+        if (event && event.callbacks.indexOf(callback) > -1) {
+            event.unregisterCallback(callback);
+            if (event.callbacks.length === 0) {
+                delete this.events[eventName];
+            }
+        }
+    }
 }

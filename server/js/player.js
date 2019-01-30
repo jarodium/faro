@@ -1,8 +1,10 @@
 /*global L*/
 /*global map*/
 /*global socket*/
-class Player {
+class Player extends Dispatcher {
     constructor() {
+        super();
+        
         this.device = {
             _position : [0,0],
             _heading : 0,
@@ -22,7 +24,18 @@ class Player {
             fov : [-45,45], //field of vision 
             dov : 10 //distance of vision
         }
+        
         //this.init();
+    }
+    
+    estado() {
+        /* returns state veriables */
+        return { 
+            pos : this.device._position,
+            hea : this.device._heading,
+            _fov_pol : typeof this._fov_pol != 'undefined' ? this._fov_pol.getLatLngs() : [],
+            _fov_pol2 : typeof this._fov_pol2 != 'undefined' ? this._fov_pol2.getLatLngs() : []
+        }
     }
     
     init() {
@@ -48,15 +61,19 @@ class Player {
         
         this.device._position = [ position.coords.latitude, position.coords.longitude ];
         //this.device._heading = position.heading;
+        
         //updates self marker
         this.device._leafMarker.setLatLng(this.device._position);
         
+        //clears previous polys before new update
+        if (typeof this._fov_pol == 'object') window.map.removeLayer(this._fov_pol);
+        if (typeof this._fov_pol2 == 'object') window.map.removeLayer(this._fov_pol2);
+        
         //updates self field of vision
         if (this.stats.fov.length == 2) {
-            //console.log(this.device._position);
-            //console.log(this.stats.dov);
-            //console.log(this.device._heading);
-            //console.log(this.stats.fov[0]);
+            /**
+             * This object has "frontal sight"
+             * */
             
             let latlngs = [
                 getPoint(
@@ -72,6 +89,9 @@ class Player {
             this._fov_pol = L.polygon(latlngs, {color: 'red'}).addTo(window.map);
         }
         if (this.stats.fov.length == 4) {
+            /**
+             * This object has "side sight"
+             * */
             let latlngs = [
                 getPoint(
                     this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[0]
@@ -99,9 +119,11 @@ class Player {
             this._fov_pol = L.polygon(latlngs, {color: 'red'}).addTo(window.map);
             this._fov_pol2 = L.polygon(latlngs2, {color: 'red'}).addTo(window.map);
         }
-        
-        socket.emit('updateCoord', position.coords);
+        //window.socket.emit('updatePlayer', this.estado() );
+        if (this.events["move"]) {
+            this.dispatch("move",this.estado());
+        }
     }
     
-   
+   //elem.addEventListener('build', function (e) { /* ... */ }, false);
 }

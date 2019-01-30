@@ -72,14 +72,19 @@ function initmap(myLat) {
     });*/
     
     var player = new Player();
-    //player.init();
+    player.init();
     
+    player.on("move", function(data) {
+        console.log(data);
+        socket.emit('updatePlayer', data );
+    });
+    //player.dispatch("NewMessage", "meh");
     //adicionar eventos
-    var el = document.querySelector('#start');
+    //var el = document.querySelector('#start');
     // attach anonymous function to click event
-    addEvent(el, 'touchstart', function(){ 
+    /*addEvent(el, 'touchstart', function(){ 
         player.init();
         document.querySelector('#start'); // select the first returned <div> element 
         el.parentNode.removeChild(el);
-    })
+    })*/
 }

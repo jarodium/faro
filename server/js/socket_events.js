@@ -1,21 +1,19 @@
 //bind listeners
 /*global socket*/
 /*global markers*/
-socket.on('critterSpawned', function (data) {
+window.socket.on('critterSpawned', function (data) {
     for (var x in data) {
         var id = data[x].id;
         if (!markers[id]) {
             //markers[id] = L.marker([0,0]).addTo(map);
             markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
         }
-        
-            markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
-    
+        markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
     }
 });
-socket.on('critterMoved', function(data) {
-    console.log("critterMoved");
-    console.log(data);
+window.socket.on('critterMoved', function(data) {
+    /*console.log("critterMoved");
+    console.log(data);*/
     var id = data.id;
     if (markers[id]) {
         //console.log("movendo");
@@ -26,9 +24,9 @@ socket.on('critterMoved', function(data) {
     }
 })
 
-socket.on('critterDestroy', function (data) {
-    console.log("critterDestroy");
-    console.log(data);
+window.socket.on('critterDestroy', function (data) {
+    /*console.log("critterDestroy");
+    console.log(data);*/
     var id = data.id;
     
     if (markers[id]) {
@@ -38,10 +36,11 @@ socket.on('critterDestroy', function (data) {
         markers.splice(markers.findIndex(v => v.id === id), 1);
         
     }
-    //socket.emit('my other event', { my: 'data' });
+    //window.socket.emit('my other event', { my: 'data' });
 });
-socket.on('coordsUpdated', function (data) {
-    console.log("coordsUpdated");
+
+window.socket.on('coordsUpdated', function (data) {
+    console.log("PlayerUpdated");
     console.log(data);
-    //socket.emit('my other event', { my: 'data' });
+    //window.socket.emit('my other event', { my: 'data' });
 });
