@@ -13,7 +13,7 @@ function getPoint(centro,distancia,direccao) {
     distancia = distancia / 1000;
     direccao = Math.radians(direccao);
     
-    console.log(centro+"--"+distancia+" - "+direccao);
+    //console.log(centro+"--"+distancia+" - "+direccao);
     let lat1 = Math.radians(centro[0]) //Current lat point converted to radians
     let lon1 = Math.radians(centro[1]) //Current long point converted to radians
 

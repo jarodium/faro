@@ -15,6 +15,7 @@
   src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
   crossorigin="anonymous"></script>
+  <script src="https://raw.githubusercontent.com/adtile/Full-Tilt/master/dist/fulltilt.min.js"></script>
    <style>
        html, body { width:100%; height:100%; }
    </style>
@@ -22,7 +23,6 @@
 <body>
     <div id="map" style="width:100%; height:100%;"></div>
     <script>
-        var socket = io.connect('https://192.168.56.101:3000');
         var markers = {};
         window.map = {};
         var myIcon2 = L.icon({
@@ -39,10 +39,46 @@
     <script src="js/map.js"></script>
     <script src="js/player.js"></script>
     <script>
+        
+        var socket = io.connect('https://192.168.56.101:3000');
         socket.on('connect', () => {
-            initmap([37.0214493,-7.9330167]);
+            initmap([37.022361,-7.94102]);
         });
         
+        socket.on('critterSpawned', function (data) {
+            for (var x in data) {
+                var id = data[x].id;
+                if (!markers[id]) {
+                    //markers[id] = L.marker([0,0]).addTo(map);
+                    markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
+                }
+                //markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
+            }
+        });
+        
+        socket.on('critterMoved', function(data) {
+            /*console.log("critterMoved");
+            console.log(data);*/
+            var id = data.id;
+            if (markers[id]) {
+                //console.log("movendo");
+                var man = data.nextpos;
+                console.log(man);
+                markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
+                
+            }
+        });
+        
+        socket.on('critterDestroy', function (data) {
+            var id = data.id;
+            
+            if (markers[id]) {
+                map.removeLayer(markers[id]);
+                markers.splice(markers.findIndex(v => v.id === id), 1);
+                
+            }
+            //socket.emit('my other event', { my: 'data' });
+        });
         // attach anonymous function to click event
         /*var coordinates = [
 	        {latitude: 37.0190, longitude: -7.9327, bea:0},

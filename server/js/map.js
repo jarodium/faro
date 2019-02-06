@@ -78,6 +78,14 @@ function initmap(myLat) {
         console.log(data);
         socket.emit('updatePlayer', data );
     });
+    
+    /*Compass.watch(function (heading) {
+        console.log("compass heading "+heading);
+        //$('.compass').css('transform', 'rotate(' + (-heading) + 'deg)');
+    });
+    Compass.init(function (method) {
+        console.log('Compass heading by ' + method);
+    });*/
     //player.dispatch("NewMessage", "meh");
     //adicionar eventos
     //var el = document.querySelector('#start');
