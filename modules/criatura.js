@@ -3,17 +3,21 @@
 
 class Creature {
    constructor(stats) {
-       this.stats;       
+       this.stats = stats;       
    }
 
-   debug() {
+   debug() {       
        console.log(this.stats);
+       //console.log(this.id); // log de uma propriedade do obj extendido
    }
 }
 
-module.exports = class Dragon extends Creature {
-   constructor(stats,id) {
-        super(stats)
-        this.id = id;
-   }   
+class Dragon extends Creature {
+    constructor(stats) {        
+        super(stats);                
+    }       
 }
+
+module.exports = {
+    Dragon    
+};
