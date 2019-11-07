@@ -74,7 +74,8 @@ responder.on('message', function(request) {
   r = r.slice(r.indexOf("{"),r.lastIndexOf("}")+1);
   r = JSON.parse(r);
   
-  if (r.cmd === "spawn-critter") {
+  
+  if (r.cmd === "creature-spawn") {
     let obj = critters.find(o => o.id === r.body.id);
     
     if (!obj) { critters.push(r.body); }
@@ -87,9 +88,11 @@ responder.on('message', function(request) {
     io.sockets.emit('critterMoved',r.body);
   }
   
-  
+  /*let payload = {
+    'cmd' : 'creature-kill'
+  };
   // send reply back to client.
-  responder.send(request.toString());
+  responder.send(JSON.stringify(payload));*/
   
 });
 

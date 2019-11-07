@@ -75,3 +75,12 @@ Stack trace:
 #2 /home/pedroh/c9sdk/meh4/server.php(3): include('/home/pedroh/c9...')
 #3 {main}
   thrown in /home/pedroh/c9sdk/meh4/includes/class_mdbroker.php on line 72
+Listening on 6666…
+/home/pedroh/Documentos/Faro/node_modules/zeromq/lib/index.js:734
+  this._zmq.close();
+            ^
+
+TypeError: Socket is closed
+    at exports.Socket.Socket.close (/home/pedroh/Documentos/Faro/node_modules/zeromq/lib/index.js:734:13)
+    at process.<anonymous> (/home/pedroh/Documentos/Faro/engine.js:105:13)
+    at process.emit (events.js:198:13)
