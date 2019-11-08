@@ -76,16 +76,18 @@ responder.on('message', function(request) {
   
   
   if (r.cmd === "creature-spawn") {
-    let obj = critters.find(o => o.id === r.body.id);
+    let obj = critters.find(o => o.id === r.stats.id);
     
-    if (!obj) { critters.push(r.body); }
-    io.sockets.emit('critterSpawned',critters);
+    if (!obj) { critters.push(r.stats); }
+
+    console.log(critters);
+    //io.sockets.emit('critterSpawned',r.stats); //é suposto adicionar uma criatur ao interface web
   }
   if (r.cmd === 'kill-critter') {
-    io.sockets.emit('critterDestroy',r.body);
+    //io.sockets.emit('critterDestroy',r.body);
   }
   if (r.cmd === 'move-critter') {
-    io.sockets.emit('critterMoved',r.body);
+    //io.sockets.emit('critterMoved',r.body);
   }
   
   /*let payload = {
@@ -105,5 +107,13 @@ responder.bind('tcp://*:6666', function(err) {
 });
 
 process.on('SIGINT', function() {
-  responder.close();
+  let payload = {
+    'cmd' : 'server-shutdown'
+  };
+  // send reply back to client.
+  responder.send(JSON.stringify(payload));
+
+  setTimeout(function() {
+    responder.close();
+  },critters.length*500);  
 });

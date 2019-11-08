@@ -6,7 +6,7 @@ const { Dragon } = require("./modules/criatura");
      * spawn_points - parametrizado?
  */
 let stats = {
-    "id": "DRGN"+Math.random().toString(36).substring(7),
+    "id": "DRGN"+Math.random().toString(36).substring(7),    
     "name" : "Dragon",
     "spawn_points" : [{
         "lat" : 37.0212903,

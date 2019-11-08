@@ -37,8 +37,9 @@ class Creature {
         
         requester.send(JSON.stringify(payload));
 
-        process.on('SIGINT', function() {            
+        process.on('SIGTERM', function() {                        
             requester.close();
+            process.exit(0);
         });
     }    
 }
