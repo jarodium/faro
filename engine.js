@@ -66,6 +66,7 @@ io.on('connection', function (client) {
  * ZMQ LOGIC *
  * 
 */
+responder.setsockopt(zmq.ZMQ_LINGER, 0);
 
 responder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
@@ -109,15 +110,21 @@ responder.bind('tcp://*:6666', function(err) {
 //fazer o spawn da creatura aqui
 
 
-
-process.on('SIGINT', function() {
+function encerrar() {
+  /*
+    Enviar a todos os clientes à escuta para sairem
+  */
   let payload = {
     'cmd' : 'server-shutdown'
-  };
-  // send reply back to client.
+  };  
   responder.send(JSON.stringify(payload));
-
-  setTimeout(function() {
+  
+  console.log("saíndo");;
+  server.close(function () {
     responder.close(); //aqui está a emitir erro que a socket já estava fechada. melhorar o evento de close via CTRL+C e process kill linux
-  },critters.length*500);  
-});
+    process.exit(0);
+  });
+}
+
+process.on('SIGINT',encerrar);
+process.on('SIGTERM', encerrar);
