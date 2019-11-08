@@ -106,6 +106,10 @@ responder.bind('tcp://*:6666', function(err) {
   }
 });
 
+//fazer o spawn da creatura aqui
+
+
+
 process.on('SIGINT', function() {
   let payload = {
     'cmd' : 'server-shutdown'
@@ -114,6 +118,6 @@ process.on('SIGINT', function() {
   responder.send(JSON.stringify(payload));
 
   setTimeout(function() {
-    responder.close();
+    responder.close(); //aqui está a emitir erro que a socket já estava fechada. melhorar o evento de close via CTRL+C e process kill linux
   },critters.length*500);  
 });
