@@ -21,7 +21,7 @@ class Creature {
             
             console.log(MSG);
 
-            if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") {                
+            if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") {                     
                 requester.close();
                 process.exit(0);
             }
