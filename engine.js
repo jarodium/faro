@@ -152,9 +152,9 @@ function encerrar() {
   };  
   responder.send(JSON.stringify(payload));
 
-  console.log("saíndo");;
+  console.log("saíndo");
   server.close(function () {
-    responder.close(); //aqui está a emitir erro que a socket já estava fechada. melhorar o evento de close via CTRL+C e process kill linux
+    responder.close(); 
     process.exit(0);
   });
 }

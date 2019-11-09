@@ -20,5 +20,5 @@ let stats = {
     "fovd" : 100
 }
 const drogon = new Dragon(stats);
-drogon.debug();
+//drogon.debug();
 drogon.__connect();

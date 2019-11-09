@@ -21,7 +21,8 @@ class Creature {
             
             console.log(MSG);
 
-            if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") {                     
+            if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") { 
+                console.log("creature exiting");
                 requester.close();
                 process.exit(0);
             }
@@ -36,12 +37,14 @@ class Creature {
         }
         
         requester.send(JSON.stringify(payload));
-
-        process.on('SIGTERM', function() {                        
+        function __encerrar() {                        
             requester.close();
             process.exit(0);
-        });
+        }
+        process.on('SIGINT',__encerrar);
+        process.on('SIGTERM', __encerrar);
     }    
+
 }
 
 class Dragon extends Creature {
