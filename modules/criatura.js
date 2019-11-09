@@ -37,14 +37,17 @@ class Creature {
         }
         
         requester.send(JSON.stringify(payload));
-        function __encerrar() {                        
+
+       
+        process.on('SIGINT', function() {                        
             requester.close();
             process.exit(0);
-        }
-        process.on('SIGINT',__encerrar);
-        process.on('SIGTERM', __encerrar);
+        });
+        process.on('SIGTERM', function() {                        
+            requester.close();
+            process.exit(0);
+        });
     }    
-
 }
 
 class Dragon extends Creature {

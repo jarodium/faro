@@ -16,7 +16,7 @@
        html, body { width:100%; height:100%; }
    </style>
 <script>
-    var socket = io.connect('https://192.168.56.101:3000');
+    var socket = io.connect('https://localhost:3000');
     var markers = {};
     var myIcon;
     var myIcon2;
@@ -78,6 +78,7 @@
         socket.emit('updateCoord', position.coords);
         console.log(position.coords);
         myMaker.setLatLng([position.coords.latitude,position.coords.longitude])/*.setRotationAngle(man.bea)*/;
+        map.setView([position.coords.latitude,position.coords.longitude],12);
     }
     
 
@@ -108,7 +109,7 @@
 	    // create the tile layer with correct attribution
 	    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 15, attribution: osmAttrib});		
+	    var osm = new L.TileLayer(osmUrl, {minZoom: 19, maxZoom: 19, attribution: osmAttrib});		
 
 	    // start the map in South-East England
 	    map.setView(myLat,12);
@@ -142,7 +143,7 @@
             /*shadowAnchor: [4, 62],*/  // the same for the shadow
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
-        myMaker = L.marker(myLat, {icon: myIcon3}).addTo(map);
+        myMaker = L.marker(myLat, {icon: myIcon}).addTo(map);
         
     }
 </script>

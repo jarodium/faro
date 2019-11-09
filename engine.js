@@ -45,17 +45,6 @@ var clientsCoords  = [];
 var critters = [];
 
 server.listen(3000);
-
-function search(nameKey, prop, myArray){
-    k = -1;
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i][prop]=== nameKey) {
-            k = i;
-            break;
-        }
-    }
-    return k;
-}
 /**
  * APP Server LOGIC
  * 
@@ -72,19 +61,27 @@ io.on('connection', function (client) {
   clients.push(client); 
   clientsCoords.push('');
   
-  client.on('disconnect', function() {
-    clientsCoords.splice(clientsCoords.indexOf(client), 1);
-    clients.splice(clients.indexOf(client), 1);
-  });
-  
-  io.on('updateCoord', function (client, msg) {
+  /*
+    Funções para os users
+  */
+  function updateCoords (client, msg) {
     var ind = clients.indexOf(client);
     if (ind != -1) {
       clientsCoords[ind] = msg;
       console.log('I received a private message by ', client, ' saying ', msg);
       client.broadcast.emit('coordsUpdated',JSON.stringify(clientsCoords));
     }
+  }
+
+  client.on('disconnect', function() {
+    
+    io.off('updateCoord', updateCoords);
+
+    clientsCoords.splice(clientsCoords.indexOf(client), 1);
+    clients.splice(clients.indexOf(client), 1);
   });
+  
+  io.on('updateCoord', updateCoords);
 });
 
 /**
@@ -105,9 +102,8 @@ responder.on('message', function(request) {
     let obj = critters.find(o => o.id === r.stats.id);
     
     if (!obj) { critters.push(r.stats); }
-
-    console.log(critters);
-    //io.sockets.emit('critterSpawned',r.stats); //é suposto adicionar uma criatur ao interface web
+    //console.log(critters);
+    //io.sockets.emit('web-'+r.cmd,r.stats); //é suposto adicionar uma criatur ao interface web
   }
   if (r.cmd === 'kill-critter') {
     //io.sockets.emit('critterDestroy',r.body);
@@ -135,7 +131,7 @@ responder.bind('tcp://*:6666', function(err) {
 //fazer o spawn da creatura aqui
 rs('./spawn_criatura.js', function (err) {
   if (err) throw err;
-  console.log('finished running some-script.js');
+  console.log('finished running creature');
 });
 
 
@@ -153,10 +149,11 @@ function encerrar() {
   responder.send(JSON.stringify(payload));
 
   console.log("saíndo");
+  io.httpServer.close();
   server.close(function () {
-    responder.close(); 
-    process.exit(0);
+    responder.close();     
   });
+  process.exit(0);
 }
 
 process.on('SIGINT',encerrar);
