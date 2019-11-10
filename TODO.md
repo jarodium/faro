@@ -1,12 +1,9 @@
 # TODO
 
-## Node
+# Rever a navegação GPS simulada do player
+# Refazer a navegação GPS da criatura via API MapBoX nodejs
+# Testar os hits do lado do cliente.
 
-- engine.js 
-    - ln 65) Testar a parte do topico para ver se existe o comando "move"
+# Rever a navegação de GPS simulada de 2 players
+# Testar os hits de ambos os jogadores
 
-## PHP
-
-- critter_a
-    - testar o comando move para confirmar a presença do "topic"
-    - colocar as definições necessárias para a criatura
