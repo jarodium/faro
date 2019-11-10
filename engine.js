@@ -60,7 +60,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (client) {
   clients.push(client); 
   clientsCoords.push('');
-  
+    //console.log("client online");  
   /*
     Funções para os users
   */
@@ -74,11 +74,12 @@ io.on('connection', function (client) {
   }
 
   client.on('disconnect', function() {
+    clientsCoords.splice(clientsCoords.indexOf(client), 1);
+    clients.splice(clients.indexOf(client), 1);
     
     io.off('updateCoord', updateCoords);
 
-    clientsCoords.splice(clientsCoords.indexOf(client), 1);
-    clients.splice(clients.indexOf(client), 1);
+    
   });
   
   io.on('updateCoord', updateCoords);

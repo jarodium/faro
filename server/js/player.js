@@ -8,6 +8,12 @@ class Player extends Dispatcher {
         this.device = {
             _position : [0,0],
             _heading : 0,
+            _leafIconT : L.icon({
+                iconUrl: 'img/leaf-green.png',
+                iconSize:     [23, 23], // size of the icon
+                iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
+                popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
+            }),
             _leafIcon : L.icon({
                 iconUrl: 'img/right-arrow2.png',
                 iconSize:     [23, 23], // size of the icon

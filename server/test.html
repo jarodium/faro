@@ -25,6 +25,15 @@
     <script>
         var markers = {};
         window.map = {};
+        var myIcon = L.icon({
+            iconUrl: 'img/leaf-green.png',
+            shadowUrl: 'img/leaf-shadow.png',
+            iconSize:     [38, 95], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
         var myIcon2 = L.icon({
             iconUrl: 'img/right-arrow.png',
            /*shadowUrl: 'img/leaf-shadow.png',*/
@@ -35,25 +44,26 @@
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
     </script>
-    <script src="js/utils.js"></script>
-    <script src="js/map.js"></script>
+    <script src="js/utils.js"></script>    
     <script src="js/player.js"></script>
+    <script src="js/map.js"></script>
     <script>
         
-        var socket = io.connect('https://192.168.56.101:3000');
+        var socket = io.connect('https://localhost:3000');
         socket.on('connect', () => {
-            initmap([37.022361,-7.94102]);
+            initmap([37.0345556,-7.9504845]);
         });
         
-        socket.on('critterSpawned', function (data) {
-            for (var x in data) {
+        socket.on('web-creature-spawn', function (data) {
+            console.log("received new spawn");
+            /*for (var x in data) {
                 var id = data[x].id;
                 if (!markers[id]) {
                     //markers[id] = L.marker([0,0]).addTo(map);
                     markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
                 }
                 //markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
-            }
+            }*/
         });
         
         socket.on('critterMoved', function(data) {
