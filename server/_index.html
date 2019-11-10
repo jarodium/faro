@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+   <script src="js/leaflet.rotatedMarker.js"></script>
+   <script src="js/compass.js"></script>
+   <style>
+       html, body { width:100%; height:100%; }
+   </style>
+<script>
+    var socket = io.connect('https://localhost:3000');
+    var markers = {};
+    var myIcon;
+    var myIcon2;
+    var myIcon3;
+    var myMaker;
+    var map;
+    //bind listeners
+    socket.on('critterMoved', function(data) {
+        console.log("critterMoved");
+        console.log(data);
+        var id = data.id;
+        /*console.log(id);*/
+        if (markers[id]) {
+            //console.log("movendo");
+            var man = data.nextpos;
+            console.log(man);
+            markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
+            
+        }
+    })
+    socket.on('critterSpawned', function (data) {
+        console.log("critterSpawned");
+        console.log(data);
+        for (var x in data) {
+            var id = data[x].id;
+            if (!markers[id]) {
+                //markers[id] = L.marker([0,0]).addTo(map);
+                markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
+            }
+            /*else {
+                markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
+            }*/
+        }
+        //socket.emit('my other event', { my: 'data' });
+    });
+    socket.on('critterDestroy', function (data) {
+        console.log("critterDestroy");
+        console.log(data);
+        var id = data.id;
+        
+        if (markers[id]) {
+            //console.log("movendo");
+            //markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
+            map.removeLayer(markers[id]);
+            markers.splice(markers.findIndex(v => v.id === id), 1);
+            
+        }
+        //socket.emit('my other event', { my: 'data' });
+    });
+    socket.on('coordsUpdated', function (data) {
+        console.log("coordsUpdated");
+        console.log(data);
+        //socket.emit('my other event', { my: 'data' });
+    });
+    
+    
+    function updateDeviceP(position) {
+        /*monitorizar o gps do utilizador */
+        socket.emit('updateCoord', position.coords);
+        console.log(position.coords);
+        myMaker.setLatLng([position.coords.latitude,position.coords.longitude])/*.setRotationAngle(man.bea)*/;
+        map.setView([position.coords.latitude,position.coords.longitude],12);
+    }
+    
+
+    
+    function initDevice() {
+        
+        if (navigator.geolocation) {
+            let options = {enableHighAccuracy: true,timeout: 5000,maximumAge: 0};
+            
+            navigator.geolocation.watchPosition(function(position) {
+                updateDeviceP(position);
+            }, function(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            }, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    
+    function getLocation() {
+        
+        
+    }
+    function initmap(myLat) {
+	    // set up the map
+	    map = new L.Map('map');
+
+	    // create the tile layer with correct attribution
+	    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+	    var osm = new L.TileLayer(osmUrl, {minZoom: 19, maxZoom: 19, attribution: osmAttrib});		
+
+	    // start the map in South-East England
+	    map.setView(myLat,12);
+	    map.addLayer(osm);
+	    
+	    //getLocation();
+	    myIcon = L.icon({
+            iconUrl: 'img/leaf-green.png',
+            shadowUrl: 'img/leaf-shadow.png',
+            iconSize:     [38, 95], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        myIcon2 = L.icon({
+            iconUrl: 'img/right-arrow.png',
+           /*shadowUrl: 'img/leaf-shadow.png',*/
+            iconSize:     [23, 23], // size of the icon
+            /*shadowSize:   [50, 64],*/ // size of the shadow
+            iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
+            /*shadowAnchor: [4, 62],*/  // the same for the shadow
+            popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
+        });
+        myIcon3 = L.icon({
+            iconUrl: 'img/right-arrow2.png',
+           /*shadowUrl: 'img/leaf-shadow.png',*/
+            iconSize:     [23, 23], // size of the icon
+            /*shadowSize:   [50, 64],*/ // size of the shadow
+            iconAnchor:   [11, 7], // point of the icon which will correspond to marker's location
+            /*shadowAnchor: [4, 62],*/  // the same for the shadow
+            popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
+        });
+        myMaker = L.marker(myLat, {icon: myIcon}).addTo(map);
+        
+    }
+</script>
+</head>
+<body>
+    <div id="map" style="width:100%; height:100%;"></div>
+    <div id="start" style="top:0; position:absolute; z-index:9999;border:1px solid red; width:100%; height:100%; background:white">
+        TAP
+    </div>
+    <script>
+    function addEvent(el, type, handler) {
+       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
+    }
+        initmap([37.0345556,-7.9504845]);
+        var el = document.querySelector('#start');
+        // attach anonymous function to click event
+        addEvent(el, 'touchstart', function(){ 
+            initDevice();
+            document.querySelector('#start'); // select the first returned <div> element 
+            el.parentNode.removeChild(el);
+        })
+        var watchID = Compass.watch(function (heading) {
+            //$('.degrees').text(heading);
+            console.log(heading);
+        });
+        Compass.init(function (method) {
+            console.log('Compass heading by ' + method);
+        });
+    </script>
+</body>
+</html>
