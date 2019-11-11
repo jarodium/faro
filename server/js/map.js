@@ -7,7 +7,7 @@ function initmap(myLat) {
     // create the tile layer with correct attribution
     var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 19, maxZoom: 19, attribution: osmAttrib});		
+    var osm = new L.TileLayer(osmUrl, {minZoom: 14, maxZoom: 19, attribution: osmAttrib});		
 
     // start the map in South-East England
     window.map.setView(myLat,15);
@@ -90,6 +90,7 @@ function initmap(myLat) {
     
     player.on("move", function(data) {
         console.log(data);
+        window.map.panTo(new L.LatLng(data.pos[0], data.pos[1]));
         socket.emit('updatePlayer', data );
     });
     

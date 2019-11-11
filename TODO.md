@@ -7,3 +7,5 @@
 # Rever a navegação de GPS simulada de 2 players
 # Testar os hits de ambos os jogadores
 
+# index.html
+    - Fechar o drag and drop
