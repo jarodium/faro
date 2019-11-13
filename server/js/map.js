@@ -2,7 +2,10 @@
 /*global map*/
 function initmap(myLat) {
     // set up the map
-    window.map = new L.Map('map');
+    if (!window.map) {
+        window.map = new L.Map('map');    
+    }
+    
 
     // create the tile layer with correct attribution
     var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -91,7 +94,7 @@ function initmap(myLat) {
     player.on("move", function(data) {
         console.log(data);
         window.map.panTo(new L.LatLng(data.pos[0], data.pos[1]));
-        socket.emit('updatePlayer', data );
+        socket.emit('player-moved', data );
     });
     
     /*Compass.watch(function (heading) {

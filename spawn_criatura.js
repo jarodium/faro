@@ -1,3 +1,4 @@
+const Engine = require("./modules/engine_utils");
 const { Dragon } = require("./modules/criatura");
 
 /**
@@ -21,4 +22,5 @@ let stats = {
 }
 const drogon = new Dragon(stats);
 //drogon.debug();
-drogon.__connect();
+drogon.__connect(); 
+drogon.__bringmetolife(Engine);

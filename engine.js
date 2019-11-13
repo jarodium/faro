@@ -1,7 +1,8 @@
-var fs = require('fs');
+const fs = require('fs');
 const express = require('express');
 const app = express();
 var childProcess = require('child_process');
+const Engine = require("./modules/engine_utils");
 
 var options = {
   key: fs.readFileSync('./file.pem'),
@@ -56,33 +57,35 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/server/index.html');
 });
 
+/*
+  Funções para os users
+*/
+function updateCoords (client,msg) {
+  var ind = clients.indexOf(client);
+  //console.log("updating coords");
+  //console.log(msg);
+  if (ind != -1) {
+    clientsCoords[ind] = msg;
+    console.log('I received a private message by ', client, ' saying ', msg);
+    //client.broadcast.emit('coordsUpdated',JSON.stringify(clientsCoords));
+  }
+}
 
 io.on('connection', function (client) {
   clients.push(client); 
   clientsCoords.push('');
     //console.log("client online");  
-  /*
-    Funções para os users
-  */
-  function updateCoords (client, msg) {
-    var ind = clients.indexOf(client);
-    if (ind != -1) {
-      clientsCoords[ind] = msg;
-      console.log('I received a private message by ', client, ' saying ', msg);
-      client.broadcast.emit('coordsUpdated',JSON.stringify(clientsCoords));
-    }
-  }
+    
 
   client.on('disconnect', function() {
     clientsCoords.splice(clientsCoords.indexOf(client), 1);
-    clients.splice(clients.indexOf(client), 1);
-    
-    io.off('updateCoord', updateCoords);
+    clients.splice(clients.indexOf(client), 1);    
 
-    
   });
   
-  io.on('updateCoord', updateCoords);
+  client.on('player-moved', function (cliente, data) {
+    updateCoords(cliente,data);
+  });
 });
 
 /**
@@ -109,10 +112,11 @@ responder.on('message', function(request) {
   if (r.cmd === 'kill-critter') {
     //io.sockets.emit('critterDestroy',r.body);
   }
-  if (r.cmd === 'move-critter') {
+  if (r.cmd === 'creature-moved') {
     //io.sockets.emit('critterMoved',r.body);
   }
   
+
   /*let payload = {
     'cmd' : 'creature-kill'
   };
@@ -134,6 +138,11 @@ rs('./spawn_criatura.js', function (err) {
   if (err) throw err;
   console.log('finished running creature');
 });
+
+//let latArray = [32.10458, 32.10479, 32.1038, 32.10361];
+//let longArray = [34.86448, 34.86529, 34.86563, 34.86486];
+// true
+//console.log(Engine.isCoordinateInsidePitch(32.104447, 34.865108,latArray, longArray));
 
 
 /**
