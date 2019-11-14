@@ -21,4 +21,5 @@ let stats = {
 }
 const drogon = new Dragon(stats);
 //drogon.debug();
-drogon.__connect();
+drogon.__connect(); 
+drogon.__bringmetolife();
