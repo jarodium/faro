@@ -73,10 +73,7 @@ class Creature {
         }
         //console.log(this.startingPoint);
         //console.log(this.destinationPoint);
-            /* 
-                -   Encontrar um ponto aleatório dentro de FARO_BOUNDS e escolher como destino. 
-            
-            //FAZER : obter um ponto aleatorio GPS para simbolizar o destino e definir como destinationPoint               
+            /*                        
             //this.wayPoints = this.__calcularRota(startingPoint,destinationPoint);
            
             /*setTimeout(function() {              

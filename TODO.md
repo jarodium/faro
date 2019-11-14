@@ -1,8 +1,7 @@
 # TODO
 
 # Refazer a navegação GPS da criatura via API MapBoX nodejs
-1. Criar uma função getRandomGPS no engineUtils
-2. Criar o ponto FAZER:: no criatura
+1. Obter waypoints de origem/destino no mapbox
 
 # Fazer a navegação do player pelo updateCoords
 # Testar os hits do lado do cliente.
