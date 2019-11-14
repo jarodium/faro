@@ -77,12 +77,12 @@ io.on('connection', function (client) {
     clientsCoords.splice(clientsCoords.indexOf(client), 1);
     clients.splice(clients.indexOf(client), 1);
     
-    io.off('updateCoord', updateCoords);
+    //io.off('updateCoord', updateCoords);
 
     
   });
   
-  io.on('updateCoord', updateCoords);
+  //io.on('updateCoord', updateCoords);
 });
 
 /**
