@@ -29,6 +29,10 @@ function getRandomGPS(BOUNDS) {
     }
     return [];
 }
+
+function mapBoxWaypoints(origin,destination) {
+    
+}
 module.exports = {    
     'MAPBOX_API' : MAPBOX_API,
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,
