@@ -55,6 +55,7 @@ class Creature {
         });
     } 
     __calcularRota(startingPoint,destinationPoint) {
+
         /*
             Função usada para calcular waypoints do ponto A para o ponto B
         */
@@ -64,28 +65,40 @@ class Creature {
     }
     __bringmetolife(Engine) {     
         //escolher um dos pontos de spawn
-        this.startingPoint = this.stats.spawn_points[Math.floor(Math.random()*this.stats.spawn_points.length)];
-        console.log(this.startingPoint);
-        //FAZER : obter um ponto aleatorio GPS para simbolizar o destino e definir como destinationPoint               
-        this.wayPoints = this.__calcularRota(startingPoint,destinationPoint);
+        this.startingPoint = this.stats.spawn_points[Math.floor(Math.random()*this.stats.spawn_points.length)];    
+        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
 
-        /*setTimeout(function() {              
-                //iniciar movimento
-            this.moveInterval = setInterval(function() {
-                console.log("move along");
-
-                //sacar um elemento dos waypoints array shift   
-                
-                //invocar o creature-moved com o ponto sacado 
-                
-                //se esse elemento for igual ao destinationPoint
-                    //apagar o startingPoint, destinationPoint e o WayPoints
-                // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
-
-
-            },100*this.stats.speed);
-            console.log(this.moveInterval);
-        },100)*/
+        if (this.destinationPoint.length > 0) {
+            console.log("go");
+        }
+        //console.log(this.startingPoint);
+        //console.log(this.destinationPoint);
+            /* 
+                -   Encontrar um ponto aleatório dentro de FARO_BOUNDS e escolher como destino. 
+            
+            //FAZER : obter um ponto aleatorio GPS para simbolizar o destino e definir como destinationPoint               
+            //this.wayPoints = this.__calcularRota(startingPoint,destinationPoint);
+           
+            /*setTimeout(function() {              
+                    //iniciar movimento
+                this.moveInterval = setInterval(function() {
+                    console.log("move along");
+    
+                    //sacar um elemento dos waypoints array shift   
+                    
+                    //invocar o creature-moved com o ponto sacado 
+                    
+                    //se esse elemento for igual ao destinationPoint
+                        //apagar o startingPoint, destinationPoint e o WayPoints
+                    // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
+    
+    
+                },100*this.stats.speed);
+                console.log(this.moveInterval);
+            },100)*/
+        
+        
+        
         
     }
 

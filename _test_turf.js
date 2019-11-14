@@ -7,6 +7,18 @@ var t = turf.polygon( [[ [5.39014, 43.279295], [5.390709, 43.278749], [5.3909, 4
 //var points = turf.randomPoint(1, {bbox: [5.39014, 43.279295, 5.379856, 43.252967]});
 //console.log(points.features[0].geometry.coordinates);
 ///var turfpolygon = turf.multiPolygon(this.polygons);
-console.log(Engine.FARO_BOUNDS);
-var points = turf.randomPoint(1, {bbox: [5.39014, 43.279295, 5.379856, 43.252967]});
-console.log(points.features[0].geometry.coordinates);
+//console.log(Engine.FARO_BOUNDS);
+
+/*var polygon = turf.polygon([[
+    [116, -36],
+    [131, -32],
+    [146, -43],
+    [155, -25],
+    [133, -9],
+    [111, -22],
+    [116, -36]
+]]);
+  
+var pointOnPolygon = turf.pointOnFeature(polygon);
+console.log(pointOnPolygon.geometry.coordinates);*/
+

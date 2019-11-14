@@ -18,8 +18,20 @@ const FARO_BOUNDS = [
     [-7.9905494,37.0225797],
     [-7.9963859,37.0138077],
 ];
+
+function getRandomGPS(BOUNDS) {    
+    var turf = require('@turf/turf');        
+    var line = turf.lineString(BOUNDS);
+    var bbox1 = turf.bbox(line);
+    var points = turf.randomPoint(1, {bbox: bbox1});    
+    if (points.features[0]) {
+        return points.features[0].geometry.coordinates.reverse();
+    }
+    return [];
+}
 module.exports = {    
     'MAPBOX_API' : MAPBOX_API,
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,
-    'FARO_BOUNDS' : FARO_BOUNDS
+    'FARO_BOUNDS' : FARO_BOUNDS,
+    'getRandomGPS' : getRandomGPS
 }
