@@ -31,11 +31,26 @@ function getRandomGPS(BOUNDS) {
 }
 
 function mapBoxWaypoints(origin,destination) {
-    
+    axios({
+        method: 'post',
+        url: '/login',
+        data: {
+          firstName: 'Finn',
+          lastName: 'Williams'
+        }
+    }).then((response) => {
+        //console.log(response);
+        if (response.status == 200) {
+            console.log(response.data);
+        }
+    }, (error) => {
+        console.log("could not get routes from mapbox");
+    });
 }
 module.exports = {    
     'MAPBOX_API' : MAPBOX_API,
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,
     'FARO_BOUNDS' : FARO_BOUNDS,
-    'getRandomGPS' : getRandomGPS
+    'getRandomGPS' : getRandomGPS,
+    'mapBoxWaypoints' : mapBoxWaypoints
 }
