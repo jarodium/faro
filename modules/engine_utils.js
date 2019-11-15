@@ -30,7 +30,7 @@ function getRandomGPS(BOUNDS) {
     return [];
 }
 
-function mapBoxWaypoints(origin,destination) {
+function mapBoxWaypoints(origin,destination,profile) {
     axios({
         method: 'post',
         url: '/login',

@@ -14,7 +14,8 @@ let stats = {
     ],
     "speed" : 50,
     "fov" : [-180,-140,140,180],
-    "fovd" : 100
+    "fovd" : 100,
+    "_mapbox_profile" : "walking"
 }
 const drogon = new Dragon(stats);
 //drogon.debug();

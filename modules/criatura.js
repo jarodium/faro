@@ -54,8 +54,8 @@ class Creature {
             process.exit(0);
         });
     } 
-    __calcularRota(startingPoint,destinationPoint) {
-
+    __calcularRota() {
+        console.log(this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile));
         /*
             Função usada para calcular waypoints do ponto A para o ponto B
         */
@@ -70,6 +70,7 @@ class Creature {
 
         if (this.destinationPoint.length > 0) {
             console.log("go");
+            
         }
         //console.log(this.startingPoint);
         //console.log(this.destinationPoint);
