@@ -22,3 +22,10 @@ var t = turf.polygon( [[ [5.39014, 43.279295], [5.390709, 43.278749], [5.3909, 4
 var pointOnPolygon = turf.pointOnFeature(polygon);
 console.log(pointOnPolygon.geometry.coordinates);*/
 
+var x = Engine.getRandomGPS(Engine.FARO_BOUNDS);
+var x2 = Engine.getRandomGPS(Engine.FARO_BOUNDS);
+
+Engine.mapBoxWaypoints(x,x2,"walking").then(data => {
+    //response.json({ message: 'Request received!', data })
+    console.log(data)
+});
