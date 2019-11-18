@@ -1,7 +1,9 @@
 # TODO
 
 # Refazer a navegação GPS da criatura via API MapBoX nodejs
-1. Obter waypoints de origem/destino no mapbox
+1. Gravar waypoints para a criatura
+2. Retirar os spawn_points da criatura e colocar o Startingpoint como random também
+3. Iniciar o reposicionamento da criatura com base numa formula ( função de calculos )
 
 # Fazer a navegação do player pelo updateCoords
 # Testar os hits do lado do cliente.

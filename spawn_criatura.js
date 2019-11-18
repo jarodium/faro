@@ -7,11 +7,7 @@ const { Dragon } = require("./modules/criatura");
  */
 let stats = {
     "id": "DRGN"+Math.random().toString(36).substring(7),    
-    "name" : "Dragon",
-    "spawn_points" : [
-        [37.0212903,-7.9414567],
-        [37.0189683,-7.9326587]
-    ],
+    "name" : "Dragon",    
     "speed" : 50,
     "fov" : [-180,-140,140,180],
     "fovd" : 100,

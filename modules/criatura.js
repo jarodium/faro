@@ -64,8 +64,8 @@ class Creature {
         //passo 4: armazenar o starting point + os way points + o destinationPoint em variavel
     }
     __bringmetolife(Engine) {     
-        //escolher um dos pontos de spawn
-        this.startingPoint = this.stats.spawn_points[Math.floor(Math.random()*this.stats.spawn_points.length)];    
+        //escolher um dos pontos de spawn aleatoriamente do mapa        
+        this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
         this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
 
         if (this.destinationPoint.length > 0) {
