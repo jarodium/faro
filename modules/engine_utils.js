@@ -18,6 +18,8 @@ const FARO_BOUNDS = [
     [-7.9905494,37.0225797],
     [-7.9963859,37.0138077],
 ];
+const chalk = require('chalk');
+const log = console.log;
 
 function getRandomGPS(BOUNDS) {    
     var turf = require('@turf/turf');        
@@ -31,7 +33,8 @@ function getRandomGPS(BOUNDS) {
 }
 
 function mapBoxWaypoints(origin,destination,profile) {
-    let axios = require('axios');        
+    let axios = require('axios'); 
+    log(chalk.yellow('Engine call:') + arguments.callee.name);
     return axios({
         method: 'get',
         //continuar aqui
@@ -59,6 +62,7 @@ function mapBoxWaypoints(origin,destination,profile) {
             return [];         
         }]
     }).then((response) => {        
+        log(chalk.yellow('Engine:') + ' got response from Mapbox: ');
         if (response.status == 200) {
             return response.data;
         }

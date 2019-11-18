@@ -1,11 +1,16 @@
 // person.js
 'use strict';
+const zmq = require('zeromq');
+var requester;
+const chalk = require('chalk');
+const log = console.log;
 
 class Creature {
     constructor(stats) {
         this.Engine = require(__dirname+"/engine_utils");
         this.stats = stats;
         this.moveInterval = 0;              
+        
     }
 
     debug() {       
@@ -13,9 +18,8 @@ class Creature {
        console.log(this.Engine);
        //console.log(this.id); // log de uma propriedade do obj extendido
     }
-    __connect() {                
-        var zmq = require('zeromq');
-        var requester = zmq.socket('req');         
+    __connect() {                        
+        requester = zmq.socket('req');         
         
         requester.on("message", function(reply) {
             var MSG = reply.toString();
@@ -53,50 +57,42 @@ class Creature {
             requester.close();
             process.exit(0);
         });
-    } 
-    __calcularRota() {
-        console.log(this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile));
-        /*
-            Função usada para calcular waypoints do ponto A para o ponto B
-        */
-        //passo 1: perguntar ao map box os caminhos para o destinationPoint
-        //passo 3: destinationPoint fica igual ao último ponto dado pelo mapBox
-        //passo 4: armazenar o starting point + os way points + o destinationPoint em variavel
-    }
-    __bringmetolife(Engine) {     
+    }     
+    __bringmetolife() {     
+        //console.log(this.stats);
         //escolher um dos pontos de spawn aleatoriamente do mapa        
         this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
         this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
 
-        if (this.destinationPoint.length > 0) {
-            console.log("go");
+        this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile).
+        then(data => {
+            this.wayPoints = data;
+            log(chalk.blue('Creature waypoints set'));
+            //log(this.wayPoints);
             
-        }
-        //console.log(this.startingPoint);
-        //console.log(this.destinationPoint);
-            /*                        
-            //this.wayPoints = this.__calcularRota(startingPoint,destinationPoint);
-           
-            /*setTimeout(function() {              
+            var imacreature = this;
+            setTimeout(function() {              
                     //iniciar movimento
+                //var timer = 100 * self.stats.speed;
                 this.moveInterval = setInterval(function() {
-                    console.log("move along");
-    
-                    //sacar um elemento dos waypoints array shift   
-                    
-                    //invocar o creature-moved com o ponto sacado 
-                    
-                    //se esse elemento for igual ao destinationPoint
-                        //apagar o startingPoint, destinationPoint e o WayPoints
-                    // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
-    
-    
-                },100*this.stats.speed);
-                console.log(this.moveInterval);
-            },100)*/
-        
-        
-        
+                    log(chalk.blue('creature moving'));
+                    log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
+                    if (imacreature.wayPoints.length > 0) {
+                        //sacar um elemento dos waypoints array shift   
+                        let nextPoint = imacreature.wayPoints.shift();
+                        log(chalk.blue('creature moving to:'));
+                        console.log(nextPoint);
+                        //invocar o creature-moved com o ponto sacado 
+                        if ( nextPoint == imacreature.startingPoint) {
+                            log(chalk.red('next point eq starting point'));
+                        }
+                        //se esse elemento for igual ao destinationPoint
+                            //apagar o startingPoint, destinationPoint e o WayPoints
+                        // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
+                    }    
+                },100*imacreature.stats.speed);                
+            },100);            
+        }).catch(error => console.log(error));        
         
     }
 
