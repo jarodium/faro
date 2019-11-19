@@ -58,9 +58,8 @@ class Creature {
             process.exit(0);
         });
     }     
-    __iniciarMovimento() {
+    __iniciarRota() {
        
-
         this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile).
         then(data => {
             this.wayPoints = data;
@@ -99,8 +98,8 @@ class Creature {
                             log(chalk.blue('last goal'));                            
                             log(imacreature.startingPoint);
                             log(imacreature.destinationPoint);
-                            // chamar outra vez o iniciarMovimento 
-                            imacreature.__iniciarMovimento();
+                            // chamar outra vez o __iniciarRota 
+                            imacreature.__iniciarRota();
                             imacreature = null;
                         }
                             
@@ -116,7 +115,7 @@ class Creature {
         //escolher um dos pontos de spawn aleatoriamente do mapa  
         this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
         this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);      
-        this.__iniciarMovimento();    
+        this.__iniciarRota();    
         
     }
 
