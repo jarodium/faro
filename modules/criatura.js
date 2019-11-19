@@ -59,13 +59,12 @@ class Creature {
         });
     }     
     __iniciarMovimento() {
-        this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
-        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
+       
 
         this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile).
         then(data => {
             this.wayPoints = data;
-            log(chalk.blue('Creature waypoints set'));
+            //log(chalk.blue('Creature waypoints set'));
             //log(this.wayPoints);
             
             var imacreature = this;
@@ -74,30 +73,35 @@ class Creature {
                 //var timer = 100 * self.stats.speed;
                 this.moveInterval = setInterval(function() {                    
                     log(chalk.blue('creature moving from'));
-                    log(imacreature.startingPoint);
-                    log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
+                    //log(imacreature.startingPoint);
+                    //log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
                     if (imacreature.wayPoints.length > 0) {
                         //sacar um elemento dos waypoints array shift   
                             //os waypoints não são comparáveis com o startingpoint e o destination point
                         var nextPoint = imacreature.wayPoints.shift();
 
-                        log(chalk.blue('creature moving 2'));
+                        //log(chalk.blue('creature moving 2'));
                         let payload = {
                             'cmd' : 'creature-maneuver',
                             'destination' : nextPoint
                         }   
-                        requester.send(JSON.stringify(payload));  
-
+                        //log(requester);
+                        var x = requester.send(JSON.stringify(payload));  
+                        //log (x);
                         if (imacreature.wayPoints.length == 0) {
-                            log(chalk.blue('no more waypoints'));                            
+                            //log(chalk.blue('no more waypoints'));                            
                             clearInterval(this);
                             
                             //log(nextPoint);
+                            //colocar o starting point igual ao next point e sacar um destination random
                             imacreature.startingPoint = nextPoint.maneuver.location;
+                            imacreature.destinationPoint = imacreature.Engine.getRandomGPS(imacreature.Engine.FARO_BOUNDS);
                             log(chalk.blue('last goal'));                            
                             log(imacreature.startingPoint);
-                            //colocar o starting point igual ao next point e sacar um destination random
-                        // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
+                            log(imacreature.destinationPoint);
+                            // chamar outra vez o iniciarMovimento 
+                            imacreature.__iniciarMovimento();
+                            imacreature = null;
                         }
                             
                     }                       
@@ -109,7 +113,9 @@ class Creature {
     }
     __bringmetolife() {     
         //console.log(this.stats);
-        //escolher um dos pontos de spawn aleatoriamente do mapa        
+        //escolher um dos pontos de spawn aleatoriamente do mapa  
+        this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
+        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);      
         this.__iniciarMovimento();    
         
     }

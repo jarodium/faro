@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 var childProcess = require('child_process');
 const Engine = require("./modules/engine_utils");
+const chalk = require('chalk');
+const log = console.log;
 
 var options = {
   key: fs.readFileSync('./file.pem'),
@@ -113,15 +115,17 @@ responder.on('message', function(request) {
     //io.sockets.emit('critterDestroy',r.body);
   }
   if (r.cmd === 'creature-maneuver') {
+    log(chalk.yellow('Engine: received creature maneuver'));
+    log(r.destination);
     io.sockets.emit('web-'+r.cmd,r.destination);
   }
   
 
-  /*let payload = {
-    'cmd' : 'creature-kill'
+  let payload = {
+    'cmd' : 'ack'
   };
   // send reply back to client.
-  responder.send(JSON.stringify(payload));*/
+  responder.send(JSON.stringify(payload));
   
 });
 
