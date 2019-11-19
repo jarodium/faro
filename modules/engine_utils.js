@@ -27,7 +27,7 @@ function getRandomGPS(BOUNDS) {
     var bbox1 = turf.bbox(line);
     var points = turf.randomPoint(1, {bbox: bbox1});    
     if (points.features[0]) {
-        return points.features[0].geometry.coordinates.reverse();
+        return points.features[0].geometry.coordinates;
     }
     return [];
 }
@@ -38,7 +38,7 @@ function mapBoxWaypoints(origin,destination,profile) {
     return axios({
         method: 'get',
         //continuar aqui
-        url: MAPBOX_API.replace("{M}",profile).replace("{SGPS1}",origin[1]).replace("{EGPS1}",origin[0]).replace("{SGPS2}",destination[1]).replace("{EGPS2}",destination[0]),        
+        url: MAPBOX_API.replace("{M}",profile).replace("{SGPS1}",origin[0]).replace("{EGPS1}",origin[1]).replace("{SGPS2}",destination[0]).replace("{EGPS2}",destination[1]),        
         transformResponse: [(data) => {
             //console.log(data);
             var dt = JSON.parse(data);            

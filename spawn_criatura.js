@@ -8,7 +8,7 @@ const { Dragon } = require("./modules/criatura");
 let stats = {
     "id": "DRGN"+Math.random().toString(36).substring(7),    
     "name" : "Dragon",    
-    "speed" : 50,
+    "speed" : 10, //50
     "fov" : [-180,-140,140,180],
     "fovd" : 100,
     "_mapbox_profile" : "walking"

@@ -58,9 +58,7 @@ class Creature {
             process.exit(0);
         });
     }     
-    __bringmetolife() {     
-        //console.log(this.stats);
-        //escolher um dos pontos de spawn aleatoriamente do mapa        
+    __iniciarMovimento() {
         this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
         this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
 
@@ -74,25 +72,45 @@ class Creature {
             setTimeout(function() {              
                     //iniciar movimento
                 //var timer = 100 * self.stats.speed;
-                this.moveInterval = setInterval(function() {
-                    log(chalk.blue('creature moving'));
+                this.moveInterval = setInterval(function() {                    
+                    log(chalk.blue('creature moving from'));
+                    log(imacreature.startingPoint);
                     log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
                     if (imacreature.wayPoints.length > 0) {
                         //sacar um elemento dos waypoints array shift   
-                        let nextPoint = imacreature.wayPoints.shift();
-                        log(chalk.blue('creature moving to:'));
-                        console.log(nextPoint);
-                        //invocar o creature-moved com o ponto sacado 
-                        if ( nextPoint == imacreature.startingPoint) {
-                            log(chalk.red('next point eq starting point'));
-                        }
-                        //se esse elemento for igual ao destinationPoint
-                            //apagar o startingPoint, destinationPoint e o WayPoints
+                            //os waypoints não são comparáveis com o startingpoint e o destination point
+                        var nextPoint = imacreature.wayPoints.shift();
+
+                        log(chalk.blue('creature moving 2'));
+                        let payload = {
+                            'cmd' : 'creature-maneuver',
+                            'destination' : nextPoint
+                        }   
+                        requester.send(JSON.stringify(payload));  
+
+                        if (imacreature.wayPoints.length == 0) {
+                            log(chalk.blue('no more waypoints'));                            
+                            clearInterval(this);
+                            
+                            //log(nextPoint);
+                            imacreature.startingPoint = nextPoint.maneuver.location;
+                            log(chalk.blue('last goal'));                            
+                            log(imacreature.startingPoint);
+                            //colocar o starting point igual ao next point e sacar um destination random
                         // chamar outra vez o calcularRota usando o destination Point como starting point e escolhendo de novo um ponto aleatorio                    
-                    }    
+                        }
+                            
+                    }                       
+                    //actualizar o starting point e o destination point
+                    
                 },100*imacreature.stats.speed);                
             },100);            
-        }).catch(error => console.log(error));        
+        }).catch(error => console.log(error));    
+    }
+    __bringmetolife() {     
+        //console.log(this.stats);
+        //escolher um dos pontos de spawn aleatoriamente do mapa        
+        this.__iniciarMovimento();    
         
     }
 

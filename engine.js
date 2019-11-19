@@ -112,8 +112,8 @@ responder.on('message', function(request) {
   if (r.cmd === 'kill-critter') {
     //io.sockets.emit('critterDestroy',r.body);
   }
-  if (r.cmd === 'creature-moved') {
-    //io.sockets.emit('critterMoved',r.body);
+  if (r.cmd === 'creature-maneuver') {
+    io.sockets.emit('web-'+r.cmd,r.destination);
   }
   
 
