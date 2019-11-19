@@ -124,7 +124,7 @@ responder.on('message', function(request) {
   let payload = {
     'cmd' : 'ack'
   };
-  // send reply back to client.
+  // enviar ACK para o cliente para podermos ter uma nova mensagem 
   responder.send(JSON.stringify(payload));
   
 });
