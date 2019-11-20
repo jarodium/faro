@@ -64,7 +64,7 @@ function mapBoxWaypoints(origin,destination,profile) {
                         ptd = Math.floor(element.duration / element.geometry.coordinates.length)
                     }                    
                     pts.forEach(e => {
-                        pontos.push({'long':e[0],'lat':e[1],'duration':ptd,'speed_mod':0});
+                        pontos.push({'long':e[0],'lat':e[1],'duration':ptd});
                     });
                     //console.log(element.geometry);
                 });                
