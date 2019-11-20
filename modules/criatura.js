@@ -77,11 +77,11 @@ class Creature {
             }   
             requester.send(JSON.stringify(payload));  
 
-            log(chalk.yellow('Creature moving in '+timeOutSpeed+"ms"));
+            //log(chalk.yellow('Creature moving in '+timeOutSpeed+"ms"));
             var imacreature = this
             setTimeout(function() {
-                log(chalk.green('creature moved'));
-                log(nextPoint);
+                //log(chalk.green('creature moved'));
+                //log(nextPoint);
                 imacreature.__fazMovimento();
                 lastPoint = nextPoint;
             },timeOutSpeed);
@@ -89,7 +89,7 @@ class Creature {
         else {
             log(chalk.red('end of travel'));            
             this.startingPoint = [lastPoint.long,lastPoint.lat];
-            this.destinationPoint = this.Engine.getRandomGPS(imacreature.Engine.FARO_BOUNDS);            
+            this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);            
             // chamar outra vez o __iniciarRota para construir o array de novo
             this.__iniciarRota();            
         }                       

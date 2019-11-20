@@ -1,11 +1,12 @@
 # TODO
 
-# Refazer a navegação GPS da criatura via API MapBoX nodejs
-1. Gravar waypoints para a criatura
-3. Iniciar o reposicionamento da criatura com base numa formula ( função de calculos )
+# Finalizar movimento da criatura
+1. Apresentar o movimento no mapa do jogador
 
 # Fazer a navegação do player pelo updateCoords
-# Testar os hits do lado do cliente.
+1. Testar os hits do lado do cliente.
+2. Testar o encontro entre o jogador e uma criatura
+3. Testar o encontro entre o jogador e duas criaturas
 
 # Rever a navegação de GPS simulada de 2 players
 # Testar os hits de ambos os jogadores
