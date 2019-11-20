@@ -9,7 +9,7 @@ let stats = {
     "id": "DRGN"+Math.random().toString(36).substring(7),    
     "name" : "Dragon",    
     "speed" : 50, //será transformado em percentagem da duracção
-    "fov" : [-180,-140,140,180],
+    "fov" : [-180,180], //[-180,-140,140,180] igual a visão de um lagarto ( presa ) [-180,180] (predador)
     "fovd" : 100,
     "_mapbox_profile" : "walking"
 }
