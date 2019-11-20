@@ -58,56 +58,66 @@ class Creature {
             process.exit(0);
         });
     }     
+    __fazMovimento(duracao) {
+        /*
+        * Esta função invoca o próximo movimento com base no tempo que leva para o próximo ponto 
+        */
+
+        //aqui vai ter de levar um settimeout que volta a chamar esta função até completar a chamada ao ultimo way point
+            //quando acontecer faz um settimeout para o iniciar rota
+    }
     __iniciarRota() {
        
         this.Engine.mapBoxWaypoints(this.startingPoint,this.destinationPoint,this.stats._mapbox_profile).
         then(data => {
             this.wayPoints = data;
-            //log(chalk.blue('Creature waypoints set'));
-            //log(this.wayPoints);
-            
-            var imacreature = this;
-            setTimeout(function() {              
-                    //iniciar movimento
-                //var timer = 100 * self.stats.speed;
-                this.moveInterval = setInterval(function() {                    
-                    log(chalk.blue('creature moving from'));
-                    //log(imacreature.startingPoint);
-                    //log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
-                    if (imacreature.wayPoints.length > 0) {
-                        //sacar um elemento dos waypoints array shift   
-                            //os waypoints não são comparáveis com o startingpoint e o destination point
-                        var nextPoint = imacreature.wayPoints.shift();
 
-                        //log(chalk.blue('creature moving 2'));
-                        let payload = {
-                            'cmd' : 'creature-maneuver',
-                            'destination' : nextPoint
-                        }   
-                        //log(requester);
-                        var x = requester.send(JSON.stringify(payload));  
-                        //log (x);
-                        if (imacreature.wayPoints.length == 0) {
-                            //log(chalk.blue('no more waypoints'));                            
-                            clearInterval(this);
-                            
-                            //log(nextPoint);
-                            //colocar o starting point igual ao next point e sacar um destination random
-                            imacreature.startingPoint = nextPoint.maneuver.location;
-                            imacreature.destinationPoint = imacreature.Engine.getRandomGPS(imacreature.Engine.FARO_BOUNDS);
-                            log(chalk.blue('last goal'));                            
-                            log(imacreature.startingPoint);
-                            log(imacreature.destinationPoint);
-                            // chamar outra vez o __iniciarRota 
-                            imacreature.__iniciarRota();
-                            imacreature = null;
-                        }
-                            
-                    }                       
-                    //actualizar o starting point e o destination point
+            log(chalk.blue('Creature waypoints set'));       
+            log(this.wayPoints);
+            /*log(this.wayPoints[0]);
+            log(this.wayPoints[0].geometry.coordinates[0]);*/
+            process.exit(0);
+            var imacreature = this;
+            
+                //iniciar movimento
+            //var timer = 100 * self.stats.speed;
+            this.moveInterval = setInterval(function() {                    
+                log(chalk.blue('creature moving from'));
+                //log(imacreature.startingPoint);
+                //log(chalk.blue('creature waypoints len:')+imacreature.wayPoints.length);
+                if (imacreature.wayPoints.length > 0) {
+                    //sacar um elemento dos waypoints array shift   
+                        //os waypoints não são comparáveis com o startingpoint e o destination point
+                    var nextPoint = imacreature.wayPoints.shift();
+
+                    //log(chalk.blue('creature moving 2'));
+                    let payload = {
+                        'cmd' : 'creature-maneuver',
+                        'destination' : nextPoint
+                    }   
+                    //log(requester);
+                    requester.send(JSON.stringify(payload));  
                     
-                },100*imacreature.stats.speed);                
-            },100);            
+                    if (imacreature.wayPoints.length == 0) {
+                        //log(chalk.blue('no more waypoints'));                            
+                        clearInterval(this);
+                        
+                        //log(nextPoint);
+                        //colocar o starting point igual ao next point e sacar um destination random
+                        imacreature.startingPoint = nextPoint.maneuver.location;
+                        imacreature.destinationPoint = imacreature.Engine.getRandomGPS(imacreature.Engine.FARO_BOUNDS);
+                        log(chalk.blue('last goal'));                            
+                        log(imacreature.startingPoint);
+                        log(imacreature.destinationPoint);
+                        // chamar outra vez o __iniciarRota 
+                        imacreature.__iniciarRota();
+                        imacreature = null;
+                    }
+                        
+                }                       
+                //actualizar o starting point e o destination point
+                
+            },100*imacreature.stats.speed);                            
         }).catch(error => console.log(error));    
     }
     __bringmetolife() {     

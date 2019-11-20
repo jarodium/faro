@@ -44,20 +44,31 @@ function mapBoxWaypoints(origin,destination,profile) {
             var dt = JSON.parse(data);            
             if (dt.routes && dt.routes[0].legs[0].steps) {                
                 dt = dt.routes[0].legs[0].steps;
+                var pontos = [];
+
                 dt.forEach(element => {
-                delete element.name; 
-                delete element.intersections; 
-                delete element.weight;
-                delete element.mode;
-                delete element.driving_side;
-                //limpar maneuver
-                delete element.maneuver.type; 
-                delete element.maneuver.instruction; 
-                delete element.maneuver.modifier; 
-                //limpar geometry -> para já fica a geometry para efeitos de visualização no mapa                   
-                //console.log(element.geometry);
-                });
-                return dt;
+                    /*delete element.name; 
+                    delete element.intersections; 
+                    delete element.weight;
+                    delete element.mode;
+                    delete element.driving_side;
+                    //limpar maneuver
+                    delete element.maneuver.type; 
+                    delete element.maneuver.instruction; 
+                    delete element.maneuver.modifier; 
+                    delete element.maneuver.location; */              
+                    //usar as coordenadas passo a passo do geometry como os waypoints que precisamos
+                    pts = element.geometry.coordinates;
+                    ptd = 1; //1 segundo de duração por defeito
+                    if (element.geometry.coordinates.length > 0) {
+                        ptd = Math.floor(element.duration / element.geometry.coordinates.length)
+                    }                    
+                    pts.forEach(e => {
+                        pontos.push({'long':e[0],'lat':e[1],'duration':ptd,'speed_mod':0});
+                    });
+                    //console.log(element.geometry);
+                });                
+                return pontos;
             }            
             return [];         
         }]
