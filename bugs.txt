@@ -1,2 +1,0 @@
-server up and running at 3000 port
-Listening on 6666…
