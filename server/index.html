@@ -48,51 +48,58 @@
             popupAnchor:  [-3, -5] // point from which the popup should open relative to the iconAnchor
         });
     </script>
-    <script src="js/utils.js"></script>    
-    <script src="js/player.js"></script>
-    <script src="js/map.js"></script>
+    <script src="js/utils.js"></script>        
     <script>
         
-        var socket = io.connect('https://localhost:3000');
+        socket = io.connect('https://localhost:3000');
         socket.on('connect', () => {
             initmap([37.0345556,-7.9504845]);
-        });
-        
-        socket.on('web-creature-spawn', function (data) {
-            console.log("received new spawn");
-            /*for (var x in data) {
-                var id = data[x].id;
-                if (!markers[id]) {
-                    //markers[id] = L.marker([0,0]).addTo(map);
-                    markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
-                }
-                //markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
-            }*/
-        });
-        
-        socket.on('critterMoved', function(data) {
-            /*console.log("critterMoved");
-            console.log(data);*/
-            var id = data.id;
-            if (markers[id]) {
-                //console.log("movendo");
-                var man = data.nextpos;
-                console.log(man);
-                markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
-                
-            }
-        });
-        
-        socket.on('critterDestroy', function (data) {
-            var id = data.id;
             
-            if (markers[id]) {
-                map.removeLayer(markers[id]);
-                markers.splice(markers.findIndex(v => v.id === id), 1);
+            socket.on('web-creature-spawn', function (data) {
+                console.log("received new spawn");
+                console.log(data);
+                /*for (var x in data) {
+                    var id = data[x].id;
+                    if (!markers[id]) {
+                        //markers[id] = L.marker([0,0]).addTo(map);
+                        markers[id] = L.marker([0,0], {icon: myIcon2}).addTo(map)
+                    }
+                    //markers[id].setLatLng(new L.LatLng(pos[1], pos[0]));
+                }*/
+            });
+            
+            socket.on('critterMoved', function(data) {
+                /*console.log("critterMoved");
+                console.log(data);*/
+                var id = data.id;
+                if (markers[id]) {
+                    //console.log("movendo");
+                    var man = data.nextpos;
+                    console.log(man);
+                    markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
+                    
+                }
+            });
+            
+            socket.on('critterDestroy', function (data) {
+                var id = data.id;
                 
-            }
-            //socket.emit('my other event', { my: 'data' });
+                if (markers[id]) {
+                    map.removeLayer(markers[id]);
+                    markers.splice(markers.findIndex(v => v.id === id), 1);
+                    
+                }
+                //socket.emit('my other event', { my: 'data' });
+            });
         });
+
+        socket.on('disconnect', (reason) => {
+            clearMap();
+            socket.connect();
+            // else the socket will automatically try to reconnect
+        });
+        
+        
         // attach anonymous function to click event
         /*var coordinates = [
 	        {latitude: 37.0190, longitude: -7.9327, bea:0},
@@ -108,5 +115,7 @@
         //when you are ready, fire it up.
         simulation.start(); */
     </script>
+    <script src="js/player.js"></script>
+    <script src="js/map.js"></script>
 </body>
 </html>

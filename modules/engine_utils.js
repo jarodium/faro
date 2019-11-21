@@ -34,7 +34,7 @@ function getRandomGPS(BOUNDS) {
 
 function mapBoxWaypoints(origin,destination,profile) {
     let axios = require('axios'); 
-    log(chalk.yellow('Engine call:') + arguments.callee.name);
+    //log(chalk.yellow('Engine call:') + arguments.callee.name);
     return axios({
         method: 'get',
         //continuar aqui
@@ -73,7 +73,7 @@ function mapBoxWaypoints(origin,destination,profile) {
             return [];         
         }]
     }).then((response) => {        
-        log(chalk.yellow('Engine:') + ' got response from Mapbox: ');
+        //log(chalk.yellow('Engine:') + ' got response from Mapbox: ');
         if (response.status == 200) {
             return response.data;
         }

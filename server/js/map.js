@@ -73,30 +73,30 @@ function initmap(myLat) {
         
         //myPoint.setLatLng(getPoint([37.0214493,-7.9330167],50,m1Ang));
     });*/
-    socket.emit('query-creatures', {} );
-    socket.on('query-creatures-reply', function(data) {
-        console.log("critterMoved");
+    socket.emit('web-poll-creatures', {} );
+    socket.on('web-poll-creatures-reply', function(data) {
+        console.log("critters polled");
         console.log(data);
-        var id = data.id;
-        /*console.log(id);*/
-        if (markers[id]) {
-            //console.log("movendo");
-            var man = data.nextpos;
-            console.log(man);
-            markers[id].setLatLng([man.ori,man.des]).setRotationAngle(man.bea);
-            
-        }
+        //var id = data.id;
+        /*console.log(id);*/        
     })
+
+    //quando receber um player coordinates updated fazer update de todos menos este cliente
+
 
     var player = new Player();
     player.init();
     
-    player.on("move", function(data) {
-        console.log(data);
+    player.on("move", function(data) {        
         window.map.panTo(new L.LatLng(data.pos[0], data.pos[1]));
-        socket.emit('player-moved', data );
+        console.log(JSON.stringify(data));
+        socket.emit('player-moved', JSON.stringify(data));
     });
     
+
+
+
+
     /*Compass.watch(function (heading) {
         console.log("compass heading "+heading);
         //$('.compass').css('transform', 'rotate(' + (-heading) + 'deg)');
@@ -113,4 +113,15 @@ function initmap(myLat) {
         document.querySelector('#start'); // select the first returned <div> element 
         el.parentNode.removeChild(el);
     })*/
+}
+function clearMap() {
+    /*
+    *   Clears assets and markers related to creatures, etc
+    */
+    if (window.map) {
+        window.map.eachLayer(function(layer){
+            console.log(layer);
+        });
+    }
+   
 }

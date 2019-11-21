@@ -26,10 +26,10 @@ class Creature {
             MSG = MSG.slice(MSG.indexOf("{"),MSG.lastIndexOf("}")+1);
             MSG = JSON.parse(MSG);
             
-            console.log(MSG);
+            //console.log(MSG);
 
             if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") { 
-                console.log("creature exiting");
+                //console.log("creature exiting");
                 clearInterval(this.moveInterval);
                 requester.close();
                 process.exit(0);
@@ -62,7 +62,7 @@ class Creature {
         /*
         * Esta função invoca o próximo movimento com base no tempo que leva para o próximo ponto 
         */
-        log(chalk.blue('Creature movement set with '+this.wayPoints.length+" moves"));   
+        //log(chalk.blue('Creature movement set with '+this.wayPoints.length+" moves"));   
         var lastPoint;
 
         if (this.wayPoints.length > 0) {
@@ -87,9 +87,14 @@ class Creature {
             },timeOutSpeed);
         }
         else {
-            log(chalk.red('end of travel'));            
-            this.startingPoint = [lastPoint.long,lastPoint.lat];
-            this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);            
+            if (lastPoint.long && lastPoint.lat) {
+                //log(chalk.red('end of travel'));            
+                this.startingPoint = [lastPoint.long,lastPoint.lat];
+            }
+            else {
+                this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
+            }
+            this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
             // chamar outra vez o __iniciarRota para construir o array de novo
             this.__iniciarRota();            
         }                       

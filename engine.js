@@ -62,32 +62,49 @@ app.get('/', function (req, res) {
 /*
   Funções para os users
 */
-function updateCoords (client,msg) {
-  var ind = clients.indexOf(client);
+function updateCoords (clientID,data) {
+  log(chalk.yellow('Engine: received player update order'));   
+  //log(client);
+  var ind = clients.indexOf(clientID);
   //console.log("updating coords");
   //console.log(msg);
   if (ind != -1) {
-    clientsCoords[ind] = msg;
-    console.log('I received a private message by ', client, ' saying ', msg);
-    //client.broadcast.emit('coordsUpdated',JSON.stringify(clientsCoords));
+    clientsCoords[ind] = data;
+    log('Engine: client found and updated coordinates');
+      //emitir isto quando precisar de atualizar coordenadas em multi jogador
+    //client.broadcast.emit('player-coordinates-updated',JSON.stringify(clientsCoords));
+    /*let payload = {
+      'cmd' : 'encounter-test',
+      'clientID' : clientID,
+      'data' : data
+    };    
+    responder.send(JSON.stringify(payload));*/
   }
 }
 
 io.on('connection', function (client) {
-  clients.push(client); 
+  clients.push(client.id); 
   clientsCoords.push('');
     //console.log("client online");  
     
 
   client.on('disconnect', function() {
-    clientsCoords.splice(clientsCoords.indexOf(client), 1);
-    clients.splice(clients.indexOf(client), 1);    
+    clientsCoords.splice(clientsCoords.indexOf(client.id), 1);
+    clients.splice(clients.indexOf(client.id), 1);    
 
   });
   
-  client.on('player-moved', function (cliente, data) {
-    updateCoords(cliente,data);
+  client.on('player-moved', function (data) {
+    log(chalk.yellow('Engine: received player movement'));    
+    updateCoords(client.id,data);
   });
+
+  client.on('web-poll-creatures',function(data) {
+    log(chalk.yellow('Engine: received pollcreature order'));    
+      //no futuro remover o uso da variavel critters e ler os processos filhos lançados?
+    io.sockets.emit('web-poll-creatures-reply',JSON.stringify(critters));
+  })
+
 });
 
 /**
@@ -115,8 +132,8 @@ responder.on('message', function(request) {
     //io.sockets.emit('critterDestroy',r.body);
   }
   if (r.cmd === 'creature-maneuver') {
-    log(chalk.yellow('Engine: received creature maneuver'));
-    log(r.destination);
+    //log(chalk.yellow('Engine: received creature maneuver'));
+    //log(r.destination);
     io.sockets.emit('web-'+r.cmd,r.destination);
   }
   
