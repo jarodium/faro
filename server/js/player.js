@@ -72,7 +72,7 @@ class Player extends Dispatcher {
         } else {
             alert("Geolocation is not supported by this browser.");
         }
-        this.device._leafMarker = L.marker(this.device._position, { icon: this.device._leafIconT }).addTo(window.map);
+        this.device._leafMarker = L.marker(this.device._position, { type: 'player', icon: this.device._leafIconT }).addTo(window.map);
         
     }
     

@@ -5,8 +5,7 @@ function initmap(myLat) {
     if (!window.map) {
         window.map = new L.Map('map');    
     }
-    
-
+        
     // create the tile layer with correct attribution
     var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -74,11 +73,31 @@ function initmap(myLat) {
         //myPoint.setLatLng(getPoint([37.0214493,-7.9330167],50,m1Ang));
     });*/
     socket.emit('web-poll-creatures', {} );
-    socket.on('web-poll-creatures-reply', function(data) {
-        console.log("critters polled");
+    socket.on('web-poll-creatures-reply', function(data) {        
+        let creatures = JSON.parse(data);
+        creatures.forEach(c => {            
+            let f = new Creature(c);                  
+        });        
+    });
+
+    socket.on('web-creature-maneuver', function(data) {
+        console.log("creature moved");
         console.log(data);
-        //var id = data.id;
-        /*console.log(id);*/        
+        //isto é um bocado ineficiente.
+        if (window.map) {
+            window.map.eachLayer(function(layer){
+                if(layer.options && layer.options.pane === "markerPane" && layer.options.hasOwnProperty('type') === 'creature') {                
+                    //console.log("Marker [" + layer.options.alt + "]");
+                    if (layer.options.alt == data.id) {
+                        console.log("match found");
+                        layer.setLatLng(L.latLng(data.lat,data.long));
+                    }
+                }                
+            });
+        }
+        //em alternativa colocar o objecto Creature à escuta de um evento de janela
+
+        //ou fazer um array de objectos do tipo Creature e fazer update directo
     })
 
     //quando receber um player coordinates updated fazer update de todos menos este cliente
@@ -120,7 +139,10 @@ function clearMap() {
     */
     if (window.map) {
         window.map.eachLayer(function(layer){
-            console.log(layer);
+            if(layer.options && layer.options.pane === "markerPane") {                
+                console.log("Marker [" + layer.options.title + "]");
+            }
+            
         });
     }
    

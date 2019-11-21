@@ -68,11 +68,12 @@ class Creature {
         if (this.wayPoints.length > 0) {
 
             var nextPoint = this.wayPoints.shift();                
+            nextPoint.id = this.stats.id;
             let timeOutSpeed = (1000*nextPoint.duration) * (parseInt(this.stats.speed,10) / 100);
                 //descomentar linha abaixo para debug
             //let timeOutSpeed = Math.floor((1000*nextPoint.duration) * ( parseInt(this.stats.speed,10) / 100)/100);
             let payload = {
-                'cmd' : 'creature-maneuver',
+                'cmd' : 'creature-maneuver',                
                 'destination' : nextPoint
             }   
             requester.send(JSON.stringify(payload));  
@@ -87,7 +88,7 @@ class Creature {
             },timeOutSpeed);
         }
         else {
-            if (lastPoint.long && lastPoint.lat) {
+            if (lastPoint.hasOwnProperty("long") && lastPoint.hasOwnProperty("lat")) {
                 //log(chalk.red('end of travel'));            
                 this.startingPoint = [lastPoint.long,lastPoint.lat];
             }
