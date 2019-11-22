@@ -27,8 +27,7 @@ class Creature /*extends Dispatcher*/ {
         this.creature._leafMarker = L.marker(this.creature._position, { type: 'creature', alt: stats.id, icon: this.creature._leafIcon }).bindTooltip(stats.name+" / "+stats.id).addTo(window.map);        
     }
     destroy() {
-        //falta remover o markador
-        //this.creature.observer.disconnect();
+        //falta remover o markador        
     }
     move(lat,long) {
         console.log("moving into position");
