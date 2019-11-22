@@ -20,9 +20,19 @@ class Creature /*extends Dispatcher*/ {
             }),
             _leafMarker : {}, //stores self marker
             _fov_pol : {}, //stores the view polygon1
-            _fov_pol2 : {} //stores the view polygon2
+            _fov_pol2 : {}, //stores the view polygon2
+            _observer : 0
         }
-        this.creature._leafMarker = L.marker(this.creature._position, { type: 'creature', alt: stats.id, icon: this.creature._leafIcon }).bindTooltip(stats.name+" / "+stats.id).addTo(window.map);
+        //setup marker
+        this.creature._leafMarker = L.marker(this.creature._position, { type: 'creature', alt: stats.id, icon: this.creature._leafIcon }).bindTooltip(stats.name+" / "+stats.id).addTo(window.map);        
     }
-
+    destroy() {
+        //falta remover o markador
+        //this.creature.observer.disconnect();
+    }
+    move(lat,long) {
+        console.log("moving into position");
+        this.creature._position = [lat,long];
+        this.creature._leafMarker.setLatLng(this.creature._position);
+    }
 }

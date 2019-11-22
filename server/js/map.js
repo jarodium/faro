@@ -76,27 +76,18 @@ function initmap(myLat) {
     socket.emit('web-poll-creatures', {} );
     socket.on('web-poll-creatures-reply', function(data) {        
         let creatures = JSON.parse(data);
-        creatures.forEach(c => {            
-            let f = ;
-            window.creatures.push(new Creature(c));
+        creatures.forEach(c => {                        
+            window.creatures[c.id] = new Creature(c);
         });        
     });
 
     socket.on('web-creature-maneuver', function(data) {
         console.log("creature moved");
         console.log(data);
-        //isto é um bocado ineficiente.
-        if (window.map) {
-            window.map.eachLayer(function(layer){
-                if(layer.options && layer.options.pane === "markerPane" && layer.options.hasOwnProperty('type') === 'creature') {                
-                    //console.log("Marker [" + layer.options.alt + "]");
-                    if (layer.options.alt == data.id) {
-                        console.log("match found");
-                        layer.setLatLng(L.latLng(data.lat,data.long));
-                    }
-                }                
-            });
+        if (window.creatures[data.id]) {
+            window.creatures[data.id].move(data.lat,data.long);
         }
+        //isto é um bocado ineficiente.       
         //em alternativa colocar o objecto Creature à escuta de mudanças de atributos na tag mody
             //https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
         //ou fazer um array de objectos do tipo Creature e fazer update directo
@@ -147,6 +138,9 @@ function clearMap() {
         });*/
     }
     if (window.creatures) {
-        window.creatures = [];
+        window.creatures.forEach(c => {             
+            c.destroy();
+        });
+        //window.creatures = [];
     }
 }
