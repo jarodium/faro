@@ -3,7 +3,8 @@
 function initmap(myLat) {
     // set up the map
     if (!window.map) {
-        window.map = new L.Map('map');    
+        window.map = new L.Map('map');  
+        window.creatures = [];  
     }
         
     // create the tile layer with correct attribution
@@ -76,7 +77,8 @@ function initmap(myLat) {
     socket.on('web-poll-creatures-reply', function(data) {        
         let creatures = JSON.parse(data);
         creatures.forEach(c => {            
-            let f = new Creature(c);                  
+            let f = ;
+            window.creatures.push(new Creature(c));
         });        
     });
 
@@ -95,8 +97,8 @@ function initmap(myLat) {
                 }                
             });
         }
-        //em alternativa colocar o objecto Creature à escuta de um evento de janela
-
+        //em alternativa colocar o objecto Creature à escuta de mudanças de atributos na tag mody
+            //https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
         //ou fazer um array de objectos do tipo Creature e fazer update directo
     })
 
@@ -138,12 +140,13 @@ function clearMap() {
     *   Clears assets and markers related to creatures, etc
     */
     if (window.map) {
-        window.map.eachLayer(function(layer){
+        /*window.map.eachLayer(function(layer){
             if(layer.options && layer.options.pane === "markerPane") {                
                 console.log("Marker [" + layer.options.title + "]");
-            }
-            
-        });
+            }            
+        });*/
     }
-   
+    if (window.creatures) {
+        window.creatures = [];
+    }
 }
