@@ -1,7 +1,7 @@
 # TODO
 
 # Finalizar movimento da criatura
-1. Apresentar o movimento no mapa do jogador
+1. Colocar os marcadoress animados ao longo do circuito de viagem
 2. Lançar uma segunda instância de uma criatura para testar
 
 # Fazer a navegação do player pelo updateCoords
