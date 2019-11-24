@@ -36,7 +36,8 @@ function calculateFOV(origin,campo,distancia_focal) {
     /*
         1 - Calcular os 3 pontos com 1 origem ( devolve 1 polígono ) se o fov possuir 2 elementos
         1.1 - Calcular os 6 pontos com 1 origem ( devolve 2 polígonos ) se o fov possuir 4 elemetos
-        1 - criar um polýgono con a função hull
+        2. - criar um polýgono con a função hull
+        3. - Devolver o polígono
     */
    if (this.stats.fov.length == 2) {
 
