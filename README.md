@@ -18,5 +18,9 @@ The experimental engine is also focused in game theory algorithm experiments.
 3. Resource Generation
 
     3.1 Engine generated resources
-    
+
     3.2 Player generated resources
+
+
+
+X. Ability to run in a clustered environment using ZeroMQ    
