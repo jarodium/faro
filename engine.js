@@ -160,6 +160,12 @@ rs('./spawn_criatura.js', function (err) {
   console.log('finished running creature');
 });
 
+
+//fazer o spawn da creatura n2 aqui
+rs('./spawn_criatura.js', function (err) {
+  if (err) throw err;
+  console.log('finished running creature');
+});
 //let latArray = [32.10458, 32.10479, 32.1038, 32.10361];
 //let longArray = [34.86448, 34.86529, 34.86563, 34.86486];
 // true
