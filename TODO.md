@@ -1,7 +1,6 @@
 # TODO
 
-# Finalizar movimento da criatura
-1. Lançar uma segunda instância de uma criatura para testar
+# Fazer o algoritmo do campo de visão e da respectiva distância de visão
 
 # Fazer a navegação do player pelo updateCoords
 1. Testar os hits do lado do cliente.

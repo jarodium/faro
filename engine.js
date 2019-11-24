@@ -63,14 +63,14 @@ app.get('/', function (req, res) {
   Funções para os users
 */
 function updateCoords (clientID,data) {
-  log(chalk.yellow('Engine: received player update order'));   
+  //log(chalk.yellow('Engine: received player update order'));   
   //log(client);
   var ind = clients.indexOf(clientID);
   //console.log("updating coords");
   //console.log(msg);
   if (ind != -1) {
     clientsCoords[ind] = data;
-    log('Engine: client found and updated coordinates');
+    //log('Engine: client found and updated coordinates');
       //emitir isto quando precisar de atualizar coordenadas em multi jogador
     //client.broadcast.emit('player-coordinates-updated',JSON.stringify(clientsCoords));
     /*let payload = {
@@ -95,12 +95,12 @@ io.on('connection', function (client) {
   });
   
   client.on('player-moved', function (data) {
-    log(chalk.yellow('Engine: received player movement'));    
+    //log(chalk.yellow('Engine: received player movement'));    
     updateCoords(client.id,data);
   });
 
   client.on('web-poll-creatures',function(data) {
-    log(chalk.yellow('Engine: received pollcreature order'));    
+    //log(chalk.yellow('Engine: received pollcreature order'));    
       //no futuro remover o uso da variavel critters e ler os processos filhos lançados?
     io.sockets.emit('web-poll-creatures-reply',JSON.stringify(critters));
   })
@@ -162,10 +162,10 @@ rs('./spawn_criatura.js', function (err) {
 
 
 //fazer o spawn da creatura n2 aqui
-rs('./spawn_criatura.js', function (err) {
+/*rs('./spawn_criatura.js', function (err) {
   if (err) throw err;
   console.log('finished running creature');
-});
+});*/
 //let latArray = [32.10458, 32.10479, 32.1038, 32.10361];
 //let longArray = [34.86448, 34.86529, 34.86563, 34.86486];
 // true

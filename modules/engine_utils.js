@@ -31,7 +31,29 @@ function getRandomGPS(BOUNDS) {
     }
     return [];
 }
+function calculateFOV(origin,campo,distancia_focal) {
+    let turf = require('@turf/turf');
+    /*
+        1 - Calcular os 3 pontos com 1 origem ( devolve 1 polígono ) se o fov possuir 2 elementos
+        1.1 - Calcular os 6 pontos com 1 origem ( devolve 2 polígonos ) se o fov possuir 4 elemetos
+        1 - criar um polýgono con a função hull
+    */
+   if (this.stats.fov.length == 2) {
 
+    /*var points = turf.featureCollection([
+        turf.point([-63.601226, 44.642643]),
+        turf.point([-63.591442, 44.651436]),
+        turf.point([-63.580799, 44.648749]),
+        turf.point([-63.573589, 44.641788]),
+        turf.point([-63.587665, 44.64533]),
+        turf.point([-63.595218, 44.64765])
+      ]);
+      var options = {units: 'miles', maxEdge: 1};
+      
+      var hull = turf.concave(points, options);*/
+   }
+    
+}
 function mapBoxWaypoints(origin,destination,profile) {
     let axios = require('axios'); 
     //log(chalk.yellow('Engine call:') + arguments.callee.name);

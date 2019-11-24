@@ -8,9 +8,7 @@ const log = console.log;
 class Creature {
     constructor(stats) {
         this.Engine = require(__dirname+"/engine_utils");
-        this.stats = stats;
-        this.moveInterval = 0;              
-        
+        this.stats = stats;                
     }
 
     debug() {       
@@ -29,8 +27,7 @@ class Creature {
             //console.log(MSG);
 
             if (MSG.cmd == "creature-kill" || MSG == "server-shutdown") { 
-                //console.log("creature exiting");
-                clearInterval(this.moveInterval);
+                //console.log("creature exiting");                
                 requester.close();
                 process.exit(0);
             }
@@ -47,17 +44,22 @@ class Creature {
         requester.send(JSON.stringify(payload));
 
        
-        process.on('SIGINT', function() {       
-            clearInterval(this.moveInterval);                 
+        process.on('SIGINT', function() {                   
             requester.close();
             process.exit(0);
         });
-        process.on('SIGTERM', function() {                        
-            clearInterval(this.moveInterval);
+        process.on('SIGTERM', function() {                                    
             requester.close();
             process.exit(0);
         });
-    }     
+    }
+    __actualizarFOV(origin) {
+        /*
+        *   Função para actualizar o Campo de Visão da Criatura
+        *   O Campo de Visão irá ser utilizado para determinar os contactos entre a criatura e o jogador
+        */       
+      this.stats._fovPol = this.Engine.calculateFOV(origin,this.stats.fov,this.stats.fovd);
+    }
     __fazMovimento() {
         /*
         * Esta função invoca o próximo movimento com base no tempo que leva para o próximo ponto 
@@ -82,8 +84,8 @@ class Creature {
             var imacreature = this
             setTimeout(function() {
                 //log(chalk.green('creature moved'));
-                //log(nextPoint);
-                imacreature.__fazMovimento();
+                //log(nextPoint);                
+                imacreature.__fazMovimento();                
                 lastPoint = nextPoint;
             },timeOutSpeed);
         }
@@ -112,7 +114,8 @@ class Creature {
         //console.log(this.stats);
         //escolher um dos pontos de spawn aleatoriamente do mapa  
         this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
-        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);      
+        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS); 
+
         this.__iniciarRota();    
         
     }
