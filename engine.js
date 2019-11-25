@@ -81,6 +81,25 @@ function updateCoords (clientID,data) {
     responder.send(JSON.stringify(payload));*/
   }
 }
+function testEncounters() {
+  //testar encontros entre assets
+  //se calhar devia mover isto para outro processo? 
+  //ou movia isto para as criaturas?
+    //mas a questão é que esta função dá para testar hits para toda a gente
+
+  //algoritmo segue
+    //Para cada cliente ligado
+      //verificar se o ponto se encontra:
+        //dentro do poligono das criaturas
+        //dentro de um polígo de assets ( recursos, etc)
+          //se sim emitir um comando para o processo em questão ( ver c1 )
+            //após recepção do comando, o gestor do processo em questão, faz o roll dos dados do cliente contra um roll dos dados da criatura
+          //se não não faz nada
+
+
+  //descrição de payloads
+    //c1 {cmd: encounter, id : xxxx, client : cliente_id, client_die: [xxx]}
+}
 
 io.on('connection', function (client) {
   clients.push(client.id); 
@@ -97,6 +116,7 @@ io.on('connection', function (client) {
   client.on('player-moved', function (data) {
     //log(chalk.yellow('Engine: received player movement'));    
     updateCoords(client.id,data);
+    testEncounters();
   });
 
   client.on('web-poll-creatures',function(data) {
@@ -133,8 +153,10 @@ responder.on('message', function(request) {
   }
   if (r.cmd === 'creature-maneuver') {
     //log(chalk.yellow('Engine: received creature maneuver'));
-    //log(r.destination);
+    //log(r.destination);    
     io.sockets.emit('web-'+r.cmd,r.destination);
+    //test encounters
+    testEncounters();
   }
   
 

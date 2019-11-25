@@ -8,7 +8,8 @@ const log = console.log;
 class Creature {
     constructor(stats) {
         this.Engine = require(__dirname+"/engine_utils");
-        this.stats = stats;                
+        this.stats = stats;     
+        this._inEncounter = false;  //in Encounter with something         
     }
 
     debug() {       
@@ -65,7 +66,7 @@ class Creature {
         * Esta função invoca o próximo movimento com base no tempo que leva para o próximo ponto 
         */
         //log(chalk.blue('Creature movement set with '+this.wayPoints.length+" moves"));   
-        var lastPoint;
+        var lastPoint = {};
 
         if (this.wayPoints.length > 0) {
 
@@ -79,14 +80,18 @@ class Creature {
                 'destination' : nextPoint
             }   
             requester.send(JSON.stringify(payload));  
-
+            
+            this.__actualizarFOV(nextPoint);
             //log(chalk.yellow('Creature moving in '+timeOutSpeed+"ms"));
-            var imacreature = this
+            var imacreature = this;
             setTimeout(function() {
                 //log(chalk.green('creature moved'));
-                //log(nextPoint);                
-                imacreature.__fazMovimento();                
-                lastPoint = nextPoint;
+                //log(nextPoint);  
+                if (imacreature._inEncounter == false) {
+                        //they see me rollin' they hatin'
+                    imacreature.__fazMovimento();                
+                    lastPoint = nextPoint;
+                }                
             },timeOutSpeed);
         }
         else {

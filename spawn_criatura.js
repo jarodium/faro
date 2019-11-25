@@ -11,7 +11,8 @@ let stats = {
     "speed" : 50, //será transformado em percentagem da duracção
     "fov" : [-180,180], //[-180,-140,140,180] igual a visão de um lagarto ( presa ) [-180,180] (predador)
     "fovd" : 100, //meters
-    "_mapbox_profile" : "walking"
+    "_mapbox_profile" : "walking",
+    "_roll_die" : "5d6"
 }
 const drogon = new Dragon(stats);
 //drogon.debug();

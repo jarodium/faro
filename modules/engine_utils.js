@@ -31,7 +31,7 @@ function getRandomGPS(BOUNDS) {
     }
     return [];
 }
-function calculateFOV(origin,campo,distancia_focal) {
+function calculateFOV(origem,campo,distancia_focal) {
     let turf = require('@turf/turf');
     /*
         1 - Calcular os 3 pontos com 1 origem ( devolve 1 polígono ) se o fov possuir 2 elementos
@@ -39,21 +39,28 @@ function calculateFOV(origin,campo,distancia_focal) {
         2. - criar um polýgono con a função hull
         3. - Devolver o polígono
     */
-   if (this.stats.fov.length == 2) {
+   /*log(chalk.yellow('Engine call:') + arguments.callee.name);
+   log(chalk.yellow('Origin:'));
+   log(origem);
+   log(chalk.yellow('FOV:'));
+   log(campo);
+   log(chalk.yellow('FOD:'));
+   log(distancia_focal);*/
 
-    /*var points = turf.featureCollection([
-        turf.point([-63.601226, 44.642643]),
-        turf.point([-63.591442, 44.651436]),
-        turf.point([-63.580799, 44.648749]),
-        turf.point([-63.573589, 44.641788]),
-        turf.point([-63.587665, 44.64533]),
-        turf.point([-63.595218, 44.64765])
-      ]);
-      var options = {units: 'miles', maxEdge: 1};
-      
-      var hull = turf.concave(points, options);*/
-   }
+   var pontoOrigem = turf.point([origem.long, origem.lat]);
+   var pontosDestino = [];
+   if (campo.length == 2) {    
+       var bearing = 90;
+       var options = {units: 'kilometers'};
+       for(var bearing=campo[0]; bearing<=campo[1]; bearing+=10) {
+           pontosDestino.push(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options));
+       }
+    }   
+    //log(chalk.yellow('Destinantions:')); 
+    //log(pontosDestino);
     
+    //return JSON.stringify(hull.geometry.coordinates);
+    return pontosDestino;        
 }
 function mapBoxWaypoints(origin,destination,profile) {
     let axios = require('axios'); 
@@ -109,5 +116,6 @@ module.exports = {
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,
     'FARO_BOUNDS' : FARO_BOUNDS,
     'getRandomGPS' : getRandomGPS,
-    'mapBoxWaypoints' : mapBoxWaypoints
+    'mapBoxWaypoints' : mapBoxWaypoints,
+    'calculateFOV' : calculateFOV
 }
