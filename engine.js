@@ -88,6 +88,9 @@ function testEncounters() {
     //mas a questão é que esta função dá para testar hits para toda a gente
 
   //algoritmo segue
+  log(chalk.yellow('Engine: encounter test'));  
+  log(clientsCoords);
+  //console.log(clientsCoords);
     //Para cada cliente ligado
       //verificar se o ponto se encontra:
         //dentro do poligono das criaturas
