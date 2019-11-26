@@ -89,20 +89,38 @@ function testEncounters() {
 
   //algoritmo segue
   log(chalk.yellow('Engine: encounter test'));  
-  log(clientsCoords);
-  //console.log(clientsCoords);
-    //Para cada cliente ligado
+  //log(critters);
+  //numbers.forEach((number, index) => console.log(`${index}:${number}`))
+
+  clientsCoords.forEach((coords, index) => {
+    
+    log(chalk.blue(coords));  
+    var playerPoint = coords.pos;
+    var playerFOV = coords._fov_pol; //este é o polígono da visão do jogador
+    critters.forEach(critter => {
+      //log(chalk.red(critter));  
+    });
+    //Para cada coordenada cliente ligado
       //verificar se o ponto se encontra:
         //dentro do poligono das criaturas
         //dentro de um polígo de assets ( recursos, etc)
           //se sim emitir um comando para o processo em questão ( ver c1 )
             //após recepção do comando, o gestor do processo em questão, faz o roll dos dados do cliente contra um roll dos dados da criatura
           //se não não faz nada
+      //verificar se cada creatura está dentro do alcance do jogador
+        //se sim perguntar ao jogador se quer fazer alguma coisa
+          //se sim, o cliente devolve um comando para fazer o encontro ( mas a criatura ativa a flag in encounter para se parar. o jogador terá um temporizador de 30 segundos para decidir depois disso liberta a criatura )
+
+
+      /* Nota: O roll dos dados da criatura decide se o encontro ocorre ou não.
+        O roll dos dados do jogador é saber 
+      */
 
 
   //descrição de payloads
     //c1 {cmd: encounter, id : xxxx, client : cliente_id, client_die: [xxx]}
-}
+  });
+};
 
 io.on('connection', function (client) {
   clients.push(client.id); 
@@ -155,9 +173,17 @@ responder.on('message', function(request) {
     //io.sockets.emit('critterDestroy',r.body);
   }
   if (r.cmd === 'creature-maneuver') {
-    //log(chalk.yellow('Engine: received creature maneuver'));
-    //log(r.destination);    
+    log(chalk.yellow('Engine: received creature maneuver'));    
+    log(r.destination);
+    //log(critters);
     io.sockets.emit('web-'+r.cmd,r.destination);
+      //encontrar e actualizar o fov no array de critters
+    var ind = critters.findIndex(x => x.id === r.destination.id);
+    log(ind);
+  //console.log("updating coords");
+  //console.log(msg);  
+//    let index = critters
+
     //test encounters
     testEncounters();
   }

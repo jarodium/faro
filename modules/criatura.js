@@ -77,7 +77,8 @@ class Creature {
             //let timeOutSpeed = Math.floor((1000*nextPoint.duration) * ( parseInt(this.stats.speed,10) / 100)/100);
             let payload = {
                 'cmd' : 'creature-maneuver',                
-                'destination' : nextPoint
+                'destination' : nextPoint,
+                'fov' : this.stats._fovPol
             }   
             requester.send(JSON.stringify(payload));  
             
