@@ -12,3 +12,8 @@
 
 # index.html
     - Fechar o drag and drop quando terminar    
+
+# BUGS
+    - [tofix] Ao arrancar o engine.js, a criatura não atualiza o .stats._fovpol logo quando o startingPoint é definido pela primeira vez
+
+

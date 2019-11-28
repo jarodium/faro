@@ -62,8 +62,9 @@ app.get('/', function (req, res) {
 /*
   Funções para os users
 */
+  //mover o codigo para dentro do player move do socket io
 function updateCoords (clientID,data) {
-  //log(chalk.yellow('Engine: received player update order'));   
+  log(chalk.yellow('Engine: received player update order'));   
   //log(client);
   var ind = clients.indexOf(clientID);
   //console.log("updating coords");
@@ -79,24 +80,26 @@ function updateCoords (clientID,data) {
       'data' : data
     };    
     responder.send(JSON.stringify(payload));*/
+    testEncounters(1);
   }
 }
-function testEncounters() {
+function testEncounters(where) {
   //testar encontros entre assets
   //se calhar devia mover isto para outro processo? 
   //ou movia isto para as criaturas?
     //mas a questão é que esta função dá para testar hits para toda a gente
 
   //algoritmo segue
-  log(chalk.yellow('Engine: encounter test'));  
+  log(chalk.yellow('Engine: encounter test '+(where==0 ? 'creature' : 'player')));  
   //log(critters);
   //numbers.forEach((number, index) => console.log(`${index}:${number}`))
 
   clientsCoords.forEach((coords, index) => {
     
-    log(chalk.blue(coords));  
+    //log(chalk.blue(coords));  
     var playerPoint = coords.pos;
     var playerFOV = coords._fov_pol; //este é o polígono da visão do jogador
+    log(chalk.blue(playerFOV));  
     critters.forEach(critter => {
       //log(chalk.red(critter));  
     });
@@ -124,8 +127,7 @@ function testEncounters() {
 
 io.on('connection', function (client) {
   clients.push(client.id); 
-  clientsCoords.push('');
-    //console.log("client online");  
+  clientsCoords.push('');    
     
 
   client.on('disconnect', function() {
@@ -136,14 +138,18 @@ io.on('connection', function (client) {
   
   client.on('player-moved', function (data) {
     //log(chalk.yellow('Engine: received player movement'));    
-    updateCoords(client.id,data);
-    testEncounters();
+    /**
+     * PARA FAZER - colocar o código de atualização de coordenadas aqui
+     */
+    updateCoords(client.id,data);   
+
   });
 
   client.on('web-poll-creatures',function(data) {
     //log(chalk.yellow('Engine: received pollcreature order'));    
       //no futuro remover o uso da variavel critters e ler os processos filhos lançados?
     io.sockets.emit('web-poll-creatures-reply',JSON.stringify(critters));
+
   })
 
 });
@@ -155,7 +161,7 @@ io.on('connection', function (client) {
 responder.setsockopt(zmq.ZMQ_LINGER, 0);
 
 responder.on('message', function(request) {
-  console.log("Received request: [", request.toString(), "]");
+  //console.log("Received request: [", request.toString(), "]");
   // do some 'work'
   var r = request.toString();
   r = r.slice(r.indexOf("{"),r.lastIndexOf("}")+1);
@@ -163,29 +169,32 @@ responder.on('message', function(request) {
   
   
   if (r.cmd === "creature-spawn") {
-    let obj = critters.find(o => o.id === r.stats.id);
-    
-    if (!obj) { critters.push(r.stats); }
-    //console.log(critters);
-    //io.sockets.emit('web-'+r.cmd,r.stats); //é suposto adicionar uma criatur ao interface web
+    /**
+     * Fechada - Não tocar     
+     */
+    let obj = critters.find(o => o.id === r.stats.id);    
+    if (!obj) { critters.push(r.stats); }    
+
+    io.sockets.emit('web-'+r.cmd,r.stats);
+
   }
+
   if (r.cmd === 'kill-critter') {
     //io.sockets.emit('critterDestroy',r.body);
   }
+
   if (r.cmd === 'creature-maneuver') {
-    log(chalk.yellow('Engine: received creature maneuver'));    
-    log(r.destination);
-    //log(critters);
+
     io.sockets.emit('web-'+r.cmd,r.destination);
       //encontrar e actualizar o fov no array de critters
-    var ind = critters.findIndex(x => x.id === r.destination.id);
-    log(ind);
-  //console.log("updating coords");
-  //console.log(msg);  
-//    let index = critters
-
-    //test encounters
-    testEncounters();
+    var ind = critters.findIndex(x => x.id === r.destination.id);    
+    if (ind != -1) {      
+      //obter o  polígon da criatura em questão
+        //até ter o primeiro ponto calculado o r.fov é undefined, mas não deveria ser.
+          //[tofix] - deveria estar definido logo quando é definido o startingpoint
+      critters[ind]._fovPol = r.fov;              
+    }
+    //testEncounters(0);
   }
   
 
@@ -194,7 +203,7 @@ responder.on('message', function(request) {
   };
   // enviar ACK para o cliente para podermos ter uma nova mensagem 
   responder.send(JSON.stringify(payload));
-  
+
 });
 
 responder.bind('tcp://*:6666', function(err) {
@@ -225,7 +234,7 @@ rs('./spawn_criatura.js', function (err) {
 
 /**
  * LÓGICA DE ENCERRAMENTO
- * 
+ * Fechada
  */
 function encerrar() {
   /*

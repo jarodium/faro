@@ -101,10 +101,10 @@ function initmap(myLat) {
     
     player.on("move", function(data) {        
         window.map.panTo(new L.LatLng(data.pos[0], data.pos[1]));
-        console.log(JSON.stringify(data));
+        //console.log(JSON.stringify(data));
         socket.emit('player-moved', JSON.stringify(data));
     });
-    
+    console.log(player);
 
 
 

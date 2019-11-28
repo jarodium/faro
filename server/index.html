@@ -52,8 +52,7 @@
     <script>
         
         socket = io.connect('https://localhost:3000');
-        socket.on('connect', () => {
-            initmap([37.0345556,-7.9504845]);
+        socket.on('connect', () => {            
             
             socket.on('web-creature-spawn', function (data) {
                 console.log("received new spawn");
@@ -91,6 +90,7 @@
                 }
                 //socket.emit('my other event', { my: 'data' });
             });
+            initmap([37.0345556,-7.9504845]);
         });
 
         socket.on('disconnect', (reason) => {
