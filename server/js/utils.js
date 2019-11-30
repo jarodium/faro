@@ -20,9 +20,15 @@ function getPoint(centro,distancia,direccao) {
     let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distancia/R) + Math.cos(lat1)*Math.sin(distancia/R)*Math.cos(direccao));
     let lon2 = lon1 + Math.atan2(Math.sin(direccao)*Math.sin(distancia/R)*Math.cos(lat1),Math.cos(distancia/R)-Math.sin(lat1)*Math.sin(lat2))
     
-    lat2 = Math.degrees(lat2)
-    lon2 = Math.degrees(lon2)
-    return new Array(lat2,lon2);
+    lat2 = Math.degrees(lat2);
+    lon2 = Math.degrees(lon2);
+    if (isNaN(lat2) || isNaN(lon2)) {
+            //em caso de falha de conta devolver o centro
+        return new Array(centro[0],centro[1]);
+    }
+    else {
+        return new Array(lat2,lon2);
+    }
 }
 
 https://stackoverflow.com/questions/34967607/rotate-polygon-around-point-in-leaflet-map

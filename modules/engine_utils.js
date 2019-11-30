@@ -111,6 +111,11 @@ function mapBoxWaypoints(origin,destination,profile) {
         return null;
     });     
 }
+
+function playerToPol(pol) {
+    /* Converter as coordenadas do jogador para um polígono */
+    
+}
 module.exports = {    
     'MAPBOX_API' : MAPBOX_API,
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,

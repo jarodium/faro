@@ -75,14 +75,15 @@ class Creature {
             let timeOutSpeed = (1000*nextPoint.duration) * (parseInt(this.stats.speed,10) / 100);
                 //descomentar linha abaixo para debug
             //let timeOutSpeed = Math.floor((1000*nextPoint.duration) * ( parseInt(this.stats.speed,10) / 100)/100);
+            this.__actualizarFOV(nextPoint);
+            
             let payload = {
                 'cmd' : 'creature-maneuver',                
                 'destination' : nextPoint,
                 'fov' : this.stats._fovPol
             }   
             requester.send(JSON.stringify(payload));  
-            
-            this.__actualizarFOV(nextPoint);
+                        
             //log(chalk.yellow('Creature moving in '+timeOutSpeed+"ms"));
             var imacreature = this;
             setTimeout(function() {
@@ -120,8 +121,7 @@ class Creature {
         //console.log(this.stats);
         //escolher um dos pontos de spawn aleatoriamente do mapa  
         this.startingPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);
-        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS); 
-
+        this.destinationPoint = this.Engine.getRandomGPS(this.Engine.FARO_BOUNDS);                 
         this.__iniciarRota();    
         
     }

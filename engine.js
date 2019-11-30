@@ -62,27 +62,7 @@ app.get('/', function (req, res) {
 /*
   Funções para os users
 */
-  //mover o codigo para dentro do player move do socket io
-function updateCoords (clientID,data) {
-  log(chalk.yellow('Engine: received player update order'));   
-  //log(client);
-  var ind = clients.indexOf(clientID);
-  //console.log("updating coords");
-  //console.log(msg);
-  if (ind != -1) {
-    clientsCoords[ind] = data;
-    //log('Engine: client found and updated coordinates');
-      //emitir isto quando precisar de atualizar coordenadas em multi jogador
-    //client.broadcast.emit('player-coordinates-updated',JSON.stringify(clientsCoords));
-    /*let payload = {
-      'cmd' : 'encounter-test',
-      'clientID' : clientID,
-      'data' : data
-    };    
-    responder.send(JSON.stringify(payload));*/
-    testEncounters(1);
-  }
-}
+
 function testEncounters(where) {
   //testar encontros entre assets
   //se calhar devia mover isto para outro processo? 
@@ -95,11 +75,11 @@ function testEncounters(where) {
   //numbers.forEach((number, index) => console.log(`${index}:${number}`))
 
   clientsCoords.forEach((coords, index) => {
-    
-    //log(chalk.blue(coords));  
-    var playerPoint = coords.pos;
-    var playerFOV = coords._fov_pol; //este é o polígono da visão do jogador
-    log(chalk.blue(playerFOV));  
+    /* 
+      Transformar o polígono o jogador para um polígono de TURF 
+        * Evitar que o site cliente consuma recursos a compilar um objecto TURF
+    */
+    var playerPol = Engine.calculateFOV({long:coords.pos[1],lat:coords.pos[0]},coords.fov,coords.fovd);        
     critters.forEach(critter => {
       //log(chalk.red(critter));  
     });
@@ -137,12 +117,25 @@ io.on('connection', function (client) {
   });
   
   client.on('player-moved', function (data) {
-    //log(chalk.yellow('Engine: received player movement'));    
-    /**
-     * PARA FAZER - colocar o código de atualização de coordenadas aqui
-     */
-    updateCoords(client.id,data);   
-
+    log(chalk.yellow('Engine: received player movement'));            
+    //log(client);
+    var ind = clients.indexOf(client.id);
+    //console.log("updating coords");
+    //console.log(msg);
+    if (ind != -1) {
+      log(chalk.green('Engine: client found and updated coordinates'));   
+      console.log(data);
+      clientsCoords[ind] = JSON.parse(data);      
+        //emitir isto quando precisar de atualizar coordenadas em multi jogador
+      //client.broadcast.emit('player-coordinates-updated',JSON.stringify(clientsCoords));
+      /*let payload = {
+        'cmd' : 'encounter-test',
+        'clientID' : clientID,
+        'data' : data
+      };    
+      responder.send(JSON.stringify(payload));*/
+      testEncounters(1);
+    }
   });
 
   client.on('web-poll-creatures',function(data) {

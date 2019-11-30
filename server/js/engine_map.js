@@ -104,7 +104,7 @@ function initmap(myLat) {
         //console.log(JSON.stringify(data));
         socket.emit('player-moved', JSON.stringify(data));
     });
-    console.log(player);
+    //console.log(player);
 
 
 

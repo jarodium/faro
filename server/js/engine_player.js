@@ -28,7 +28,7 @@ class Player extends Dispatcher {
         this.stats = {
             //fov : [-45,-135,45,135], //field of vision 
             fov : [-45,45], //field of vision 
-            dov : 10 //distance of vision
+            fovd : 10 //distance of field of vision
         }
         
         //this.init();
@@ -39,8 +39,10 @@ class Player extends Dispatcher {
         return { 
             pos : this.device._position,
             hea : this.device._heading,
-            _fov_pol : typeof this._fov_pol != 'undefined' ? this._fov_pol.getLatLngs() : [],
-            _fov_pol2 : typeof this._fov_pol2 != 'undefined' ? this._fov_pol2.getLatLngs() : []
+            fov : this.stats.fov,
+            fovd : this.stats.fovd,
+            //_fov_pol : typeof this._fov_pol != 'undefined' ? this._fov_pol.getLatLngs() : [],
+            //_fov_pol2 : typeof this._fov_pol2 != 'undefined' ? this._fov_pol2.getLatLngs() : []
         }
     }
     
@@ -105,7 +107,7 @@ class Player extends Dispatcher {
                 getPoint(
                     this.device._position ,this.stats.dov,this.device._heading+this.stats.fov[1]
                 )
-            ];
+            ];            
             this._fov_pol = L.polygon(latlngs, {color: 'red'}).addTo(window.map);
         }
         if (this.stats.fov.length == 4) {
