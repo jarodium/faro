@@ -18,6 +18,14 @@ const FARO_BOUNDS = [
     [-7.9905494,37.0225797],
     [-7.9963859,37.0138077],
 ];
+const FARO_TEST_BOUNDS = [
+    [-7.9328707,37.0135491],
+    [-7.9308912,37.0133992],
+    [-7.9309234,37.01453],
+    [-7.9309236,37.01453],
+    [-7.9328653,37.01456],
+    [-7.9328707,37.0135491]
+];
 const chalk = require('chalk');
 const log = console.log;
 
@@ -52,14 +60,13 @@ function calculateFOV(origem,campo,distancia_focal) {
    if (campo.length == 2) {    
        var bearing = 90;
        var options = {units: 'kilometers'};
-       for(var bearing=campo[0]; bearing<=campo[1]; bearing+=10) {
-           pontosDestino.push(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options));
+       for(var bearing=campo[0]; bearing<=campo[1]; bearing+=10) {                   
+            //esta linha é comentada porque o resultado final tem um tipo manhoso
+           //pontosDestino.push(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options));
+           pontosDestino.push(turf.getCoord(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options)));           
        }
-    }   
-    //log(chalk.yellow('Destinantions:')); 
-    //log(pontosDestino);
-    
-    //return JSON.stringify(hull.geometry.coordinates);
+       if (pontosDestino.length > 0) pontosDestino.push(pontosDestino[0]); //igualar para que o turf não bitchar sobre pontos equivalentes
+    }              
     return pontosDestino;        
 }
 function mapBoxWaypoints(origin,destination,profile) {
@@ -112,15 +119,27 @@ function mapBoxWaypoints(origin,destination,profile) {
     });     
 }
 
-function playerToPol(pol) {
-    /* Converter as coordenadas do jogador para um polígono */
-    
+function testIntersection(poly1,poly2) {    
+    if (typeof poly1 !== 'undefined' && typeof poly2 !== 'undefined') {        
+        console.log("intersection");
+        //test intersection with two turf features
+        let turf = require('@turf/turf');        
+        let polygon1 = turf.polygon([poly1]);
+        let polygon2 = turf.polygon([poly2]);
+        /* test intersection */    
+        return turf.intersect(polygon1, polygon2);   
+        
+    }
+    else {
+        return -1;
+    }    
 }
 module.exports = {    
     'MAPBOX_API' : MAPBOX_API,
     'MAPBOX_GEOCODER' : MAPBOX_GEOCODER,
-    'FARO_BOUNDS' : FARO_BOUNDS,
+    'FARO_BOUNDS' : FARO_TEST_BOUNDS,
     'getRandomGPS' : getRandomGPS,
     'mapBoxWaypoints' : mapBoxWaypoints,
-    'calculateFOV' : calculateFOV
+    'calculateFOV' : calculateFOV,
+    'testIntersection' : testIntersection
 }

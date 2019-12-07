@@ -77,12 +77,16 @@ function testEncounters(where) {
   clientsCoords.forEach((coords, index) => {
     /* 
       Transformar o polígono o jogador para um polígono de TURF 
-        * Evitar que o site cliente consuma recursos a compilar um objecto TURF
-    */
-    var playerPol = Engine.calculateFOV({long:coords.pos[1],lat:coords.pos[0]},coords.fov,coords.fovd);        
-    critters.forEach(critter => {
-      //log(chalk.red(critter));  
-    });
+        * Evitar que o site cliente consuma recursos a compilar um objecto TURF        
+    */    
+      var playerPol = Engine.calculateFOV({long:coords.pos[1],lat:coords.pos[0]},coords.fov,coords.fovd);        
+      critters.forEach(critter => {
+        //log(chalk.red(critter));  
+        log(chalk.yellow('Engine: testing intersection'));        
+        var encounterTest = Engine.testIntersection(critter._fovPol,playerPol);
+        log(chalk.yellow('Engine: intersection result '));        
+        console.log(encounterTest); //se undefined ou -1 então não existe encounter
+      });    
     //Para cada coordenada cliente ligado
       //verificar se o ponto se encontra:
         //dentro do poligono das criaturas
@@ -123,8 +127,7 @@ io.on('connection', function (client) {
     //console.log("updating coords");
     //console.log(msg);
     if (ind != -1) {
-      log(chalk.green('Engine: client found and updated coordinates'));   
-      console.log(data);
+      log(chalk.green('Engine: client found and updated coordinates'));         
       clientsCoords[ind] = JSON.parse(data);      
         //emitir isto quando precisar de atualizar coordenadas em multi jogador
       //client.broadcast.emit('player-coordinates-updated',JSON.stringify(clientsCoords));
