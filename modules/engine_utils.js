@@ -19,12 +19,14 @@ const FARO_BOUNDS = [
     [-7.9963859,37.0138077],
 ];
 const FARO_TEST_BOUNDS = [
-    [-7.9328707,37.0135491],
-    [-7.9308912,37.0133992],
-    [-7.9309234,37.01453],
-    [-7.9309236,37.01453],
-    [-7.9328653,37.01456],
-    [-7.9328707,37.0135491]
+    [-7.9364537,37.0196171],
+    [-7.9349946,37.0184564],
+    [-7.9334228,37.0170643],
+    [-7.93051,37.0173128],
+    [-7.9271626,37.0181865],
+    [-7.9280906,37.022067],
+    [-7.9348069,37.0214288],
+    [-7.9364537,37.0196171]
 ];
 const chalk = require('chalk');
 const log = console.log;
@@ -39,33 +41,24 @@ function getRandomGPS(BOUNDS) {
     }
     return [];
 }
-function calculateFOV(origem,campo,distancia_focal) {
+function calculateFOV(origem,campo,distancia_focal,bearing) {
     let turf = require('@turf/turf');
-    /*
-        1 - Calcular os 3 pontos com 1 origem ( devolve 1 polígono ) se o fov possuir 2 elementos
-        1.1 - Calcular os 6 pontos com 1 origem ( devolve 2 polígonos ) se o fov possuir 4 elemetos
-        2. - criar um polýgono con a função hull
-        3. - Devolver o polígono
-    */
-   /*log(chalk.yellow('Engine call:') + arguments.callee.name);
-   log(chalk.yellow('Origin:'));
-   log(origem);
-   log(chalk.yellow('FOV:'));
-   log(campo);
-   log(chalk.yellow('FOD:'));
-   log(distancia_focal);*/
 
-   var pontoOrigem = turf.point([origem.long, origem.lat]);
-   var pontosDestino = [];
-   if (campo.length == 2) {    
-       var bearing = 90;
+    var pontoOrigem = turf.point([origem.long, origem.lat]);
+    var pontosDestino = [];
+    pontosDestino.push([]);
+
+    if (campo.length == 2) {           
        var options = {units: 'kilometers'};
        for(var bearing=campo[0]; bearing<=campo[1]; bearing+=10) {                   
             //esta linha é comentada porque o resultado final tem um tipo manhoso
-           //pontosDestino.push(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options));
-           pontosDestino.push(turf.getCoord(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options)));           
+           //pontosDestino.push(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options));                   
+           pontosDestino[0].push(turf.getCoord(turf.destination(pontoOrigem, distancia_focal/1000, bearing, options)));           
        }
-       if (pontosDestino.length > 0) pontosDestino.push(pontosDestino[0]); //igualar para que o turf não bitchar sobre pontos equivalentes
+       //igualar o último ponto para que o turf não bitcha sobre pontos equivalentes. faz sentido porque os polígonos têm de ser fechados
+       if (JSON.stringify(pontosDestino[0][0]) != JSON.stringify(pontosDestino[0][pontosDestino[0].length-1])) {
+        pontosDestino[0].push(pontosDestino[0][0]);                       
+       }       
     }              
     return pontosDestino;        
 }
@@ -120,15 +113,13 @@ function mapBoxWaypoints(origin,destination,profile) {
 }
 
 function testIntersection(poly1,poly2) {    
-    if (typeof poly1 !== 'undefined' && typeof poly2 !== 'undefined') {        
-        console.log("intersection");
+    if (typeof poly1 !== 'undefined' && typeof poly2 !== 'undefined') {                
         //test intersection with two turf features
         let turf = require('@turf/turf');        
-        let polygon1 = turf.polygon([poly1]);
-        let polygon2 = turf.polygon([poly2]);
+        let polygon1 = turf.polygon(poly1);
+        let polygon2 = turf.polygon(poly2);        
         /* test intersection */    
-        return turf.intersect(polygon1, polygon2);   
-        
+        return turf.intersect(polygon1, polygon2);           
     }
     else {
         return -1;

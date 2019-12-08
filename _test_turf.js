@@ -1,31 +1,41 @@
 const Engine = require("./modules/engine_utils");
 const turf = require('@turf/turf');
 //import * as turf from '@turf/helpers'
-var t = turf.polygon( [[ [5.39014, 43.279295], [5.390709, 43.278749], [5.3909, 43.2785], [5.39014, 43.279295] ], [ [5.379856, 43.252967], [5.422988, 43.249466], [5.425048, 43.245153], [5.379856, 43.252967] ] ]);
-//console.log(t);
 
-//var points = turf.randomPoint(1, {bbox: [5.39014, 43.279295, 5.379856, 43.252967]});
-//console.log(points.features[0].geometry.coordinates);
-///var turfpolygon = turf.multiPolygon(this.polygons);
-//console.log(Engine.FARO_BOUNDS);
+//var poly1 = Engine.calculateFOV({'long' :-7.9554464, 'lat':37.0100746},[-180,180],1,-90);
+//var poly2 = Engine.calculateFOV({'long' :-7.9322, 'lat':37.0194},[-180,180],1,90);
 
-/*var polygon = turf.polygon([[
-    [116, -36],
-    [131, -32],
-    [146, -43],
-    [155, -25],
-    [133, -9],
-    [111, -22],
-    [116, -36]
+var poly1 = turf.polygon([[
+    [-7.9963859,37.0138077],
+    [-7.9554464,37.0100746],
+    [-7.9493506,37.0255263],
+    [-7.9341391,37.0089947],
+    [-7.918014,37.0100995],
+    [-7.9060061,37.0239502],
+    [-7.9236872,37.0422444],
+    [-7.939523,37.0429306],
+    [-7.9550154,37.0423815],
+    [-7.964371,37.0471084],
+    [-7.9735981,37.0497115],
+    [-7.9758082,37.0457381],
+    [-7.9756148,37.0383393],
+    [-7.9778464,37.0255948],
+    [-7.9905494,37.0225797],
+    [-7.9963859,37.0138077],
 ]]);
-  
-var pointOnPolygon = turf.pointOnFeature(polygon);
-console.log(pointOnPolygon.geometry.coordinates);*/
 
-var x = Engine.getRandomGPS(Engine.FARO_BOUNDS);
-var x2 = Engine.getRandomGPS(Engine.FARO_BOUNDS);
+var poly2 = turf.polygon([[
+    [-7.9328707,37.0135491],
+    [-7.9308912,37.0133992],
+    [-7.9309234,37.01453],
+    [-7.9309236,37.01453],
+    [-7.9328653,37.01456],
+    [-7.9328707,37.0135491]
+]]);
 
-Engine.mapBoxWaypoints(x,x2,"walking").then(data => {
-    //response.json({ message: 'Request received!', data })
-    console.log(data)
-});
+var intersection = turf.intersect( poly1, poly2 );
+
+console.log( intersection );
+//turf.intersect([poly1], [poly2]);
+//turf.polygonize(poly1);
+process.exit(0);

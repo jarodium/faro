@@ -75,17 +75,16 @@ function testEncounters(where) {
   //numbers.forEach((number, index) => console.log(`${index}:${number}`))
 
   clientsCoords.forEach((coords, index) => {
-    /* 
-      Transformar o polígono o jogador para um polígono de TURF 
-        * Evitar que o site cliente consuma recursos a compilar um objecto TURF        
-    */    
-      var playerPol = Engine.calculateFOV({long:coords.pos[1],lat:coords.pos[0]},coords.fov,coords.fovd);        
+
+      var playerPol = Engine.calculateFOV({long:coords.pos[1],lat:coords.pos[0]},coords.fov,coords.fovd,0,1);  
       critters.forEach(critter => {
         //log(chalk.red(critter));  
-        log(chalk.yellow('Engine: testing intersection'));        
-        var encounterTest = Engine.testIntersection(critter._fovPol,playerPol);
-        log(chalk.yellow('Engine: intersection result '));        
-        console.log(encounterTest); //se undefined ou -1 então não existe encounter
+        //log(chalk.yellow('Engine: testing intersection'));        
+        let encounterTest = Engine.testIntersection(critter._fovPol,playerPol,0,0);
+        if (encounterTest != '-1' && encounterTest !== null) {
+          log(chalk.yellow('Engine: intersection result '));        
+          console.log(encounterTest); //se undefined ou -1 então não existe encounter
+        }        
       });    
     //Para cada coordenada cliente ligado
       //verificar se o ponto se encontra:
@@ -137,7 +136,7 @@ io.on('connection', function (client) {
         'data' : data
       };    
       responder.send(JSON.stringify(payload));*/
-      testEncounters(1);
+      //testEncounters(1);
     }
   });
 
@@ -190,7 +189,7 @@ responder.on('message', function(request) {
           //[tofix] - deveria estar definido logo quando é definido o startingpoint
       critters[ind]._fovPol = r.fov;              
     }
-    //testEncounters(0);
+    testEncounters(0);
   }
   
 

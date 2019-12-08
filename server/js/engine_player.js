@@ -41,7 +41,7 @@ class Player extends Dispatcher {
             hea : this.device._heading,
             fov : this.stats.fov,
             fovd : this.stats.fovd,
-            //_fov_pol : typeof this._fov_pol != 'undefined' ? this._fov_pol.getLatLngs() : [],
+            _fov_pol : typeof this._fov_pol != 'undefined' ? this._fov_pol.getLatLngs() : [],
             //_fov_pol2 : typeof this._fov_pol2 != 'undefined' ? this._fov_pol2.getLatLngs() : []
         }
     }
